@@ -1,7 +1,6 @@
 ## 简历
 
- [中文](https://mindawei.github.io/cv-cn.pdf)
- [英文](https://mindawei.github.io/cv-cn.pdf)
+ [中文简历](https://mindawei.github.io/cv-cn.pdf), [英文简历](https://mindawei.github.io/cv-cn.pdf)
  
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
