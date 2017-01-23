@@ -1,6 +1,8 @@
-## Welcome to GitHub Pages
+## 简历
 
-You can use the [editor on GitHub](https://github.com/mindawei/mindawei.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+ [中文](https://mindawei.github.io/cv-cn.pdf)
+ [英文](https://mindawei.github.io/cv-cn.pdf)
+ 
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
