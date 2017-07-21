@@ -27,15 +27,15 @@
 <header class="header">
 	<div class="top-bar container-fluid">
 		<div class="actions">
-			<a class="btn" href="https://mindawei.github.io/cv-zh.pdf"><i class="fa fa-download" aria-hidden="true"></i> 下载我的中文简历</a>
-			<a class="btn" href="https://mindawei.github.io/cv-en.pdf"><i class="fa fa-download" aria-hidden="true"></i> 下载我的英文简历</a>
+			<a class="btn" href="https://mindawei.github.io/cv-zh.pdf" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 下载我的中文简历</a>
+			<a class="btn" href="https://mindawei.github.io/cv-en.pdf" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 下载我的英文简历</a>
 		</div><!--//actions-->
 		<ul class="social list-inline">
 			<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
 			<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 			<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
 			<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-			<li><a href="https://github.com/mindawei"><i class="fa fa-github-alt" aria-hidden="true"></i></a></li>
+			<li><a href="https://github.com/mindawei" target="_blank"><i class="fa fa-github-alt" aria-hidden="true"></i></a></li>
 		</ul><!--//social-->
 	</div><!--//top-bar-->
 	
@@ -45,7 +45,6 @@
 			<h1 class="name">闵大为</h1>
 			<div class="title">Java 开发</div>
 			<div class="profile">
-				<p><a href="https://github.com/mindawei"><i class="fa fa-github-alt" aria-hidden="true"> 我的 Github</i></a></p>
 				<p>爱好编程、打篮球</p>
 				<p>善于学习，获得过国家奖学金</p>
 				<p>喜欢参加各种类型的比赛，体会各种编程艺术</p>
@@ -59,7 +58,7 @@
 			<ul class="list-inline">
 				<li class="email"><i class="fa fa-envelope"></i><a href="mailto:m920376513@163.com">m920376513@163.com</a></li>
 				<li><i class="fa fa-phone"></i> <a href="tel: 0123456789">187 9595 0169</a></li>
-				<li class="website"><i class="fa fa-globe"></i><a href="#" target="_blank">mindawei.github.io</a></li>
+				<li class="website"><i class="fa fa-globe"></i><a href="https://github.com/mindawei" target="_blank">我的 Github</a></li>
 			</ul>
 		</div><!--//container-->
 	</div><!--//contact-info-->
@@ -70,6 +69,7 @@
 				<ul id="page-nav" class="nav page-nav list-inline">
 					<li><a class="scrollto" href="#eudcation-section">教育背景</a></li>
 					<li><a class="scrollto" href="#experiences-section">比赛经历</a></li>
+					<li><a class="scrollto" href="#experiences-section-2">项目经历</a></li>
 					<li><a class="scrollto" href="#portfolio-section0">比赛展示</a></li>
 					<li><a class="scrollto" href="#skills-section">专业技能</a></li>
 					<li><a class="scrollto" href="#portfolio-section1">读书笔记</a></li>
@@ -224,6 +224,53 @@
 	</section><!--//section-->
 	
 	
+	<section id="experiences-section-2" class="experiences-section section">
+		<h2 class="section-title">项目经历</h2>
+		<div class="timeline">
+			
+			<div class="item">
+				<div class="work-place">
+					<h3 class="place">微观交通仿真平台的维护和开发</h3>
+					<div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>独立开发</div>
+				</div>
+				<div class="job-meta">
+					<div class="title">2015.09 - 至今</div>
+					<div class="time">Java</div>
+				</div><!--//job-meta-->
+				<div class="job-desc">
+					<p>该项目通过模拟车辆的行驶行为来进行交通态势推演。本人的主要工作是维护和开发：</p>
+					
+					<ul>
+						<p><li>1) 性能优化：复用车辆、模板等对象、调整分支判断顺序、用数组替换部分容器（List，TreeMap）、
+使用 ThreadLocal 复用对象、车辆按道路粒度并行计算等。速度是未优化前 2 倍多。</li></p>
+						<p><li>2) 增加功能：支持地图的自动扩充、支持红绿灯信号灯控制、提供一些默认的实现（如车辆需
+求产生器）、改善换道跟车模型、和公司已有平台对接（GIS、实时数据总线）等。</li></p>
+						<p><li>3) 重构项目：将程序划分内核层和应用层，共 47250 行代码。内核层有 2 个子项目，共 22864
+行代码；应用层有 5 个子项目，共 24386 行代码。 </li></p>
+					
+					</ul>
+				
+				</div><!--//job-desc-->
+			</div><!--//item-->
+			
+			<div class="item">
+				<div class="work-place">
+					<h3 class="place">宁波市交通拥堵指数计算项目</h3>
+					<div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>核心人员</div>
+				</div>
+				<div class="job-meta">
+					<div class="title">2015.09 - 2016.02</div>
+					<div class="time">Java</div>
+				</div><!--//job-meta-->
+				<div class="job-desc">
+					<p>该项目利用宁波市道路运输管理局 2 万多辆营运车辆的 GPS 数据计算道路拥堵情况，本人在项目中完成了拥堵指数计算模块，实现了 GPS 数据到拥堵指数的折算模型。</p> 
+				</div><!--//job-desc-->
+			</div><!--//item-->
+			
+		</div><!--//timeline-->
+		
+	</section><!--//section-->
+	
 	<section id="portfolio-section0" class="portfolio-section section">
 		<h2 class="section-title">比赛展示</h2>
 		<div class="items-wrapper isotope row">
@@ -236,9 +283,9 @@
 						<h3 class="sub-title">阿里中间件比赛 优胜奖</h3>
 						<div class="meta">2017.07</div>
 						<div class="action">
-						<a href="https://github.com/mindawei/middleware-match3-1">初赛代码</a>、
-						<a href="https://github.com/mindawei/middleware-match3-2">复赛代码</a>、
-						<a href="https://mindawei.github.io/ppt/middleware.pdf">PPT</a>
+						<a href="https://github.com/mindawei/middleware-match3-1" target="_blank">初赛代码</a>、
+						<a href="https://github.com/mindawei/middleware-match3-2" target="_blank">复赛代码</a>、
+						<a href="https://mindawei.github.io/ppt/middleware.pdf" target="_blank">PPT</a>
 						</div>
 
 					</div><!--//content-->              
@@ -248,14 +295,14 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-2.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">个金所个金杯网站 入围奖</h3>
 						<div class="meta">2016.06</div>
 						<div class="action">
-						<a href="https://github.com/mindawei/zsw">代码</a>、
-						<a href="https://mindawei.github.io/ppt/zsw.pdf">PPT</a>
+						<a href="https://github.com/mindawei/zsw" target="_blank">代码</a>、
+						<a href="https://mindawei.github.io/ppt/zsw.pdf" target="_blank">PPT</a>
 						</div>
 
 					</div><!--//content-->              
@@ -265,14 +312,14 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-3.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">拍拍贷数据产品大赛 银奖</h3>
 						<div class="meta">2016.05</div>
 						<div class="action">
-						<a href="https://github.com/mindawei/p2p">代码</a>、
-						<a href="https://mindawei.github.io/ppt/klj.pdf">PPT</a>
+						<a href="https://github.com/mindawei/p2p" target="_blank">代码</a>、
+						<a href="https://mindawei.github.io/ppt/klj.pdf" target="_blank">PPT</a>
 						</div>
 
 					</div><!--//content-->              
@@ -282,13 +329,13 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-4.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">全国大学生信息安全竞赛</h3>
 						<div class="meta">2014.08</div>
 						<div class="action">
-						<a href="https://mindawei.github.io/ppt/mobile-safe.pdf">PPT</a>
+						<a href="https://mindawei.github.io/ppt/mobile-safe.pdf" target="_blank">PPT</a>
 						</div>
 
 					</div><!--//content-->              
@@ -369,12 +416,12 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-5.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">深入理解Java虚拟机</h3>
 						<div class="action">
-						<a href="https://mindawei.github.io/understand-the-jvm.pdf">查看笔记</a>
+						<a href="https://mindawei.github.io/understand-the-jvm.pdf" target="_blank">查看笔记</a>
 						</div>
 					</div><!--//content-->              
 				</div><!--//item-inner-->
@@ -383,12 +430,12 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-6.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">Java8实战</h3>
 						<div class="action">
-						<a href="https://mindawei.github.io/java8-in-action.pdf">查看笔记</a>
+						<a href="https://mindawei.github.io/java8-in-action.pdf" target="_blank">查看笔记</a>
 						</div>
 					</div><!--//content-->              
 				</div><!--//item-inner-->
@@ -397,12 +444,12 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-7.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">Head First 设计模式</h3>
 						<div class="action">
-						<a href="https://mindawei.github.io/head-first.pdf">查看笔记</a>
+						<a href="https://mindawei.github.io/head-first.pdf" target="_blank">查看笔记</a>
 						</div>
 					</div><!--//content-->              
 				</div><!--//item-inner-->
@@ -411,12 +458,12 @@
 			<div class="item frontend col-md-3 col-xs-6 ">
 				<div class="item-inner">
 					<figure class="figure">
-						<img class="img-responsive" src="assets/images/portfolio/portfolio-1.jpg" alt="" />
+						<img class="img-responsive" src="assets/images/portfolio/portfolio-8.jpg" alt="" />
 					</figure>
 					<div class="content text-left">
 						<h3 class="sub-title">Java并发编程实战</h3>
 						<div class="action">
-						<a href="https://mindawei.github.io/Java-Concurrency-in-Practice.pdf">查看笔记</a>
+						<a href="https://mindawei.github.io/Java-Concurrency-in-Practice.pdf" target="_blank">查看笔记</a>
 						</div>
 					</div><!--//content-->              
 				</div><!--//item-inner-->
@@ -445,7 +492,7 @@
 					<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 					<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
 					<li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-					<li><a href="https://github.com/mindawei"><i class="fa fa-github-alt" aria-hidden="true"></i></a></li>
+					<li><a href="https://github.com/mindawei" target="_blank"><i class="fa fa-github-alt" aria-hidden="true"></i></a></li>
 				</ul><!--//social-->
 			</div><!--//diaplog-->
 		</div><!--//intro-->
