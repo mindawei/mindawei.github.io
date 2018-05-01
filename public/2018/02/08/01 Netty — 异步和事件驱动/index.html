@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="笔记,Netty,Java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="天未的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="点击查看 《Netty in Action》笔记目录。 本文是对《Netty in Action》第1章内容的笔记和翻译，主要内容包括：  Java 中的网络使用 介绍 Netty Netty 的核心组件">
+<meta name="keywords" content="笔记,Netty,Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01 Netty — 异步和事件驱动">
+<meta property="og:url" content="http://mindawei.github.io/2018/02/08/01 Netty — 异步和事件驱动/index.html">
+<meta property="og:site_name" content="天未的博客">
+<meta property="og:description" content="点击查看 《Netty in Action》笔记目录。 本文是对《Netty in Action》第1章内容的笔记和翻译，主要内容包括：  Java 中的网络使用 介绍 Netty Netty 的核心组件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/NetworkingInJava.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/01.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/02.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/03.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/04.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/05.jpg">
+<meta property="og:image" content="http://mindawei.github.io/images/00009/06.png">
+<meta property="og:updated_time" content="2018-05-01T03:43:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="01 Netty — 异步和事件驱动">
+<meta name="twitter:description" content="点击查看 《Netty in Action》笔记目录。 本文是对《Netty in Action》第1章内容的笔记和翻译，主要内容包括：  Java 中的网络使用 介绍 Netty Netty 的核心组件">
+<meta name="twitter:image" content="http://mindawei.github.io/images/00009/NetworkingInJava.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mindawei.github.io/2018/02/08/01 Netty — 异步和事件驱动/"/>
+
+
+
+
+
+  <title>01 Netty — 异步和事件驱动 | 天未的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天未的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天未欲使从是也，吾辈必济。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mindawei.github.io/2018/02/08/01 Netty — 异步和事件驱动/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天未">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天未的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">01 Netty — 异步和事件驱动</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T13:17:35+08:00">
+                2018-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Netty/" itemprop="url" rel="index">
+                    <span itemprop="name">Netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/08/01 Netty — 异步和事件驱动/" class="leancloud_visitors" data-flag-title="01 Netty — 异步和事件驱动">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,184
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>点击查看 <a href="https://mindawei.github.io/2018/03/01/%E3%80%8ANetty-in-Action%E3%80%8B%E7%AC%94%E8%AE%B0%E7%9B%AE%E5%BD%95/">《Netty in Action》笔记目录</a>。</p>
+<p>本文是对<a href="https://download.csdn.net/download/u010738033/10245651" target="_blank" rel="noopener">《Netty in Action》</a>第1章内容的笔记和翻译，主要内容包括：</p>
+<ul>
+<li>Java 中的网络使用</li>
+<li>介绍 Netty</li>
+<li>Netty 的核心组件</li>
+</ul>
+<a id="more"></a>
+<p>Netty 是一个基于异步的、事件驱动的网络应用开发框架，可以为频繁的开发和维护提供方便，并为客户端和服务端提供高性能的协议。</p>
+<p>Netty 不仅仅是一个网络框架，它的整体架构和设计思想和它的技术内容一样重要. 为此，我们将要讨论以下一些要点：</p>
+<ul>
+<li>将关注点隔离（将业务逻辑和网络逻辑进行解耦）</li>
+<li>模块化和可重用性</li>
+<li>第一需求是系统可以被测试</li>
+</ul>
+<h2 id="Java-中的网络编程"><a href="#Java-中的网络编程" class="headerlink" title="Java 中的网络编程"></a>Java 中的网络编程</h2><p>Java 中传统的网络代码实现如下所示：<br><img src="/images/00009/NetworkingInJava.png" alt=""></p>
+<p>上面代码背后的处理模型如下所示：<br><img src="/images/00009/01.png" alt="使用阻塞 I/O 的多个连接" title="使用阻塞 I/O 的多个连接"></p>
+<p>上面模型的缺点是：</p>
+<ul>
+<li>浪费资源：在任何一个时刻，都可能由于等待输入或输出的阻塞，造成很多线程休眠。 </li>
+<li>很难支持大量数目的线程，因为任何一个线程都需要分配栈内存，而计算机内存是有限的。</li>
+<li>线程间的上下文切换会严重影响性能。</li>
+</ul>
+<h3 id="Java-NIO"><a href="#Java-NIO" class="headerlink" title="Java NIO"></a>Java NIO</h3><p>本地 Socket 库早就已经包含了非阻塞的调用方式。通过这些方法，我们可以对网络资源的使用进行更加多的控制。</p>
+<ul>
+<li>通过使用 <code>setsockopt()</code>，你可以配置 Socket，使得当没有数据的时候，读写调用可以马上返回。</li>
+<li>你可以注册一系列的非阻塞 Socket，并通过系统的事件通知 API 来了解读写的数据是否已经准备好。</li>
+</ul>
+<p>2002年的时候，Java 组织在 JDK 1.4 版本中的 <code>java.nio</code> 包中引入了非阻塞的 IO（non-blocking I/O）。</p>
+<blockquote>
+<p><strong>新 IO 还是非阻塞 IO ?</strong><br>NIO 一开始是 New Input/Output 的缩写, 但是 Java API 已经存在很长的时间了，它已经不再被认为是新的 API 了。很多使用者认为 NIO 带表了非阻塞 IO（non-blocking I/O），而原来的阻塞 IO（blocking I/O）则被认为是 OIO 或 old input/output。</p>
+</blockquote>
+<h3 id="Selectors"><a href="#Selectors" class="headerlink" title="Selectors"></a>Selectors</h3><p><code>java.nio.channels.Selector</code> 类是 Java 非阻塞 IO 实现的核心，它使用了<strong>事件驱动 API</strong> 来表明哪些非阻塞 sockets 已经准备好可以进行 I/O 了。下图展示了：在这样的模型下，一个单线程可以处理多个并发的连接。</p>
+<p><img src="/images/00009/02.png" alt="基于 Selector 的非阻塞 IO" title="基于 Selector 的非阻塞 IO"></p>
+<p>和阻塞型 IO 模型相比，这样的模型提供了更好的资源管理：</p>
+<ul>
+<li>连接可以被更少的线程支持，因此在内存管理和上下文切换上有更少的开销。</li>
+<li>当本任务没有 IO 处理的时候，线程可以重新绑定到其它任务上。</li>
+</ul>
+<h2 id="Netty-介绍"><a href="#Netty-介绍" class="headerlink" title="Netty 介绍"></a>Netty 介绍</h2><p>直接使用相对原生的 API，会增加开发的复杂度，并要求开发者具备很高的开发技能，但这样的人才还是很紧缺的。因此，需要采用一个面向对象的基本思想： <strong>隐藏复杂的实现，提供简单的抽象</strong>.</p>
+<style>
+table th:first-of-type {
+    width: 15%;
+}
+</style>
+
+<p>Netty 的特性总结: </p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Netty 特性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设计</td>
+<td>对多种传输类型统一了 API，包括阻塞和非阻塞。<br>简单但高效的线程模型。<br>支持无连接数据报套接字。<br>逻辑组件的连接，支持组件重用。<br></td>
+</tr>
+<tr>
+<td>易用性</td>
+<td>完善的 Javadoc 以及大量使用实例。<br>只需要依赖 JDK 1.6+。（一些可选的特性依赖 JDK 1.7+ 或者一些额外的依赖)</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>和 Java 本身的 API 相比，具备更高的吞吐量和更低的延时。<br>通过池化和重用，减少了资源的消耗。<br>最小化内存拷贝。</td>
+</tr>
+<tr>
+<td>鲁棒性</td>
+<td>不会由于连接的快、慢、负载较大而导致 <code>OutOfMemoryError</code>。<br>在高速网络场景中，消除了 NIO 应用程序典型的不公平读写比。</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>支持 SSL/TLS 、StartTLS。<br>在 Applet 或者 OSGI 等资源受限环境中也可以使用。</td>
+</tr>
+<tr>
+<td>社区驱动</td>
+<td>发布频繁和活跃。</td>
+</tr>
+</tbody>
+</table>
+<p>异步和事件驱动的优点： </p>
+<ul>
+<li>非阻塞的网络调用，使得我们从等待操作完成的过程中解放出来。基于这个特性的异步 IO 使得我们可以实现：异步方法立即返回，当完成的时候可以立刻或者稍后通知我们。</li>
+<li><code>Selector</code> 允许我们通过更少的线程来监控更多的连接和事件。</li>
+</ul>
+<h2 id="Netty-的核心组件"><a href="#Netty-的核心组件" class="headerlink" title="Netty 的核心组件"></a>Netty 的核心组件</h2><p>在这一节，我们要讨论 Netty 主要的构建模块：</p>
+<ul>
+<li><code>Channels</code></li>
+<li><code>Callbacks</code></li>
+<li><code>Futures</code></li>
+<li><code>Events</code> 和 <code>Handlers</code></li>
+</ul>
+<p>这些构建模块代表了不同类型的构建要素: 资源、逻辑和通知。应用程序将会通过这些模块来访问网络和数据。</p>
+<h3 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h3><p>Channel 是 Java NIO 的基本构成。它表示：</p>
+<blockquote>
+<p>与实体间打开的一个连接。这些实体包括：一个硬件设备、一个文件、一个网络 socket、或者一个程序组件，它们可以进行不同的 I/O 操作，例如：读写操作。</p>
+</blockquote>
+<p>Channel 可以被打开、关闭、建立连接、取消连接。</p>
+<h3 id="Callbacks"><a href="#Callbacks" class="headerlink" title="Callbacks"></a>Callbacks</h3><p>Callback 是一个回调方法, 本质上是指向其它方法的一个引用。通过回调可以实现：在合适时，调用指向的函数。</p>
+<p>Netty 内部使用 callbacks 来处理事件。当 callback 被触发，事件可以被对应的 <code>ChannelHandler</code> 接口实现来处理。下面的图片展示了这样的一个例子：当一个新的连接建立后，<code>ChannelHandler</code> 会回调 <code>channelActive()</code> 方法，该方法将会把消息打印出来。<br><img src="/images/00009/03.png" alt=""></p>
+<h3 id="Futures"><a href="#Futures" class="headerlink" title="Futures"></a>Futures</h3><p><code>Future</code> 提供了另一种通知机制来让应用知道操作已经完成。</p>
+<p>JDK 中提供了 <code>java.util.concurrent.Future</code> 接口，但是提供的实现实现只能允许你：手工判断操作是否完成、或者阻塞到操作完成。这样的机制不是很方面，所以 Netty 提供了自己的实现 <code>ChannelFuture</code>，它可以实现异步操作的执行。</p>
+<p><code>ChannelFuture</code> 提供了一个额外的方法，可以允许我们注册一个或多个 <code>ChannelFutureListener</code> 实例。这些监听者的回调函数 <code>operationComplete()</code> 会在方法完成时被调用。</p>
+<p>Netty 的每个输出 I/O 操作会返回一个 <code>ChannelFuture</code>，也就是说，这些输出操作是非阻塞的，会立即返回。 </p>
+<p>下例中 <code>ChannelFuture</code> 作为 I/O 操作返回的一部分。其中 <code>connect()</code> 将会没有阻塞立即返回，而调用的方法会在后台完成。<br><img src="/images/00009/04.png" alt=""></p>
+<p>下例展示了如何使用 <code>ChannelFutureListener</code>。<br><img src="/images/00009/05.jpg" alt=""></p>
+<p><code>ChannelFutureListener</code> 是一个更加完善的 callback。事实上，callbacks 和 Futures 是互补的，它们是 Netty 的一个重要组成部分。</p>
+<h3 id="Events-and-handlers"><a href="#Events-and-handlers" class="headerlink" title="Events and handlers"></a>Events and handlers</h3><p>Netty 使用不同的事件来告知我们：状态的改变、操作处于哪个阶段。 对应的行为可能包括：</p>
+<ul>
+<li>日志</li>
+<li>数据传输</li>
+<li>流控</li>
+<li>应用逻辑</li>
+</ul>
+<p>Netty 是一个网络框架，所以事件可以根据它们在输入还是输出流进行区分。</p>
+<p>输入数据或者输入相关状态改变的事件包括：</p>
+<ul>
+<li>连接的有效和无效</li>
+<li>数据读取</li>
+<li>用户事件</li>
+<li>错误事件</li>
+</ul>
+<p>输出事件是相关操作的返回结果，它将会在未来的某个时刻被调用，包括：</p>
+<ul>
+<li>打开或者关闭一个远程连接。</li>
+<li>在一个 socket 中写入或者刷新数据。</li>
+</ul>
+<p><img src="/images/00009/06.png" alt="在 ChannelHandlers 链中的输入或者输出事件" title="在 ChannelHandlers 链中的输入或者输出事件"></p>
+<p>目前，你可以把每个 handler 实例看做是针对特定的事件（event）的一个回调（callback）。</p>
+<h3 id="结合以上要素"><a href="#结合以上要素" class="headerlink" title="结合以上要素"></a>结合以上要素</h3><h4 id="Futures、Callbacks、Handlers"><a href="#Futures、Callbacks、Handlers" class="headerlink" title="Futures、Callbacks、Handlers"></a>Futures、Callbacks、Handlers</h4><p>Netty 的异步编程模型是基于 <code>Futures</code> 和 callbacks 建立的, 而将事件分发到对应的处理 handler 这样的操作是封装在 Netty 内部较深层次的。总而言之，这些元素提供了一个处理环境：可以使得应用的业务逻辑和网络的具体操作进行解耦。<strong>这是 Netty 设计的根本目标。</strong></p>
+<p>只要提供 callbacks 或者使用操作返回的 Futures，就可以实现在程序运行时拦截操作和转移输入输出数据。<strong>这使得链接操作变得非常容易和高效，并能促进写可重用、泛化程度更高的代码。</strong></p>
+<h4 id="Selectors、Events、Event-Loops"><a href="#Selectors、Events、Event-Loops" class="headerlink" title="Selectors、Events、Event Loops"></a>Selectors、Events、Event Loops</h4><p>在内部，EventLoop 被绑定到每个 Channel 上，来处理所有的事件（events），包括：</p>
+<ul>
+<li>重新注册感兴趣的事件</li>
+<li>分发事件到 ChannelHandlers</li>
+<li>调度下一步的响应</li>
+</ul>
+<p><strong>EventLoop 本身只被一个线程驱动，处理所绑定的 Channel 的所有 I/O 事件，并且这种关系在 EventLoop 的生命周期中不会改变。</strong> 这个简单和强大的设计可以消除你对同步 ChannelHandlers 的担心。</p>
+
+      
+    </div>
+    
+    
+    
+
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" <i class="fa fa-tag"></i> 笔记</a>
+          
+            <a href="/tags/Netty/" <i class="fa fa-tag"></i> Netty</a>
+          
+            <a href="/tags/Java/" <i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/06/Java-9，OSGi和模块化的未来（2）/" rel="next" title="Java 9，OSGi和模块化的未来（2）">
+                <i class="fa fa-chevron-left"></i> Java 9，OSGi和模块化的未来（2）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/09/02 你的第一个Netty应用/" rel="prev" title="02 你的第一个Netty应用">
+                02 你的第一个Netty应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzExNS85Njc0"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="天未" />
+            
+              <p class="site-author-name" itemprop="name">天未</p>
+              <p class="site-description motion-element" itemprop="description">天未欲使从是也，吾辈必济。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mindawei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:m920376513@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                一些链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com/blog/" title="阮一峰" target="_blank">阮一峰</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://calvin1978.blogcn.com/" title="江南白衣" target="_blank">江南白衣</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.useopen.com/blog.html" title="永源中间件" target="_blank">永源中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.christianposta.com/posts/" title="Christian Posta" target="_blank">Christian Posta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="阿里中间件博客" target="_blank">阿里中间件博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-中的网络编程"><span class="nav-number">1.</span> <span class="nav-text">Java 中的网络编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-NIO"><span class="nav-number">1.1.</span> <span class="nav-text">Java NIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selectors"><span class="nav-number">1.2.</span> <span class="nav-text">Selectors</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty-介绍"><span class="nav-number">2.</span> <span class="nav-text">Netty 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty-的核心组件"><span class="nav-number">3.</span> <span class="nav-text">Netty 的核心组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Channels"><span class="nav-number">3.1.</span> <span class="nav-text">Channels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Callbacks"><span class="nav-number">3.2.</span> <span class="nav-text">Callbacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Futures"><span class="nav-number">3.3.</span> <span class="nav-text">Futures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Events-and-handlers"><span class="nav-number">3.4.</span> <span class="nav-text">Events and handlers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结合以上要素"><span class="nav-number">3.5.</span> <span class="nav-text">结合以上要素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Futures、Callbacks、Handlers"><span class="nav-number">3.5.1.</span> <span class="nav-text">Futures、Callbacks、Handlers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Selectors、Events、Event-Loops"><span class="nav-number">3.5.2.</span> <span class="nav-text">Selectors、Events、Event Loops</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天未</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_site_uv">访客数: <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="powered-by">
+<span id="busuanzi_container_site_pv">浏览数: <span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 76.7k 字</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PjBX2YV1D3nbvkPMKNsiuDL3-gzGzoHsz", "YwhAIPodKeO6mgp79j9QOjf6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
