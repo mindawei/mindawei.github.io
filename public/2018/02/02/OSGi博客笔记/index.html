@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="笔记,Java,OSGi,模块化," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="天未的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本文是对killko一些博客的笔记，可以在《不可错过的OSGi入门学习资源》中找到，包括：  《走近Java模块化系统OSGi》 《创建OSGi Hello World工程》 《OSGi中Bundle间的耦合：Export/Import Package与服务》 《动态的OSGi服务》 《初次接触OSGI Blueprint》 《OSGi的配置管理：ConfigAdmin》  此外，还参考了：  《">
+<meta name="keywords" content="笔记,Java,OSGi,模块化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OSGi博客笔记">
+<meta property="og:url" content="http://mindawei.github.io/2018/02/02/OSGi博客笔记/index.html">
+<meta property="og:site_name" content="天未的博客">
+<meta property="og:description" content="本文是对killko一些博客的笔记，可以在《不可错过的OSGi入门学习资源》中找到，包括：  《走近Java模块化系统OSGi》 《创建OSGi Hello World工程》 《OSGi中Bundle间的耦合：Export/Import Package与服务》 《动态的OSGi服务》 《初次接触OSGI Blueprint》 《OSGi的配置管理：ConfigAdmin》  此外，还参考了：  《">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/生命周期层状态转移.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/模块启动.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/模块状态查看.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/模块停止.png">
+<meta property="og:updated_time" content="2018-02-08T15:06:28.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OSGi博客笔记">
+<meta name="twitter:description" content="本文是对killko一些博客的笔记，可以在《不可错过的OSGi入门学习资源》中找到，包括：  《走近Java模块化系统OSGi》 《创建OSGi Hello World工程》 《OSGi中Bundle间的耦合：Export/Import Package与服务》 《动态的OSGi服务》 《初次接触OSGI Blueprint》 《OSGi的配置管理：ConfigAdmin》  此外，还参考了：  《">
+<meta name="twitter:image" content="http://mindawei.github.io/images/00006/生命周期层状态转移.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mindawei.github.io/2018/02/02/OSGi博客笔记/"/>
+
+
+
+
+
+  <title>OSGi博客笔记 | 天未的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天未的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天未欲使从是也，吾辈必济。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mindawei.github.io/2018/02/02/OSGi博客笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天未">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天未的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OSGi博客笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T23:45:09+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/模块化/" itemprop="url" rel="index">
+                    <span itemprop="name">模块化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/02/OSGi博客笔记/" class="leancloud_visitors" data-flag-title="OSGi博客笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,829
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是对killko一些博客的笔记，可以在<a href="http://www.osgi.com.cn/article/7289520" target="_blank" rel="noopener">《不可错过的OSGi入门学习资源》</a>中找到，包括：</p>
+<ul>
+<li><a href="https://www.tianmaying.com/tutorial/osgi-kickstart" target="_blank" rel="noopener">《走近Java模块化系统OSGi》</a></li>
+<li><a href="https://www.tianmaying.com/tutorial/osgi-helloworld" target="_blank" rel="noopener">《创建OSGi Hello World工程》</a></li>
+<li><a href="https://www.tianmaying.com/tutorial/osgi-bundle-coupling" target="_blank" rel="noopener">《OSGi中Bundle间的耦合：Export/Import Package与服务》</a></li>
+<li><a href="https://www.tianmaying.com/tutorial/osgi-service" target="_blank" rel="noopener">《动态的OSGi服务》</a></li>
+<li><a href="https://www.tianmaying.com/tutorial/osgi-blueprint" target="_blank" rel="noopener">《初次接触OSGI Blueprint》</a></li>
+<li><a href="https://www.tianmaying.com/tutorial/osgi-configadmin-service" target="_blank" rel="noopener">《OSGi的配置管理：ConfigAdmin》</a></li>
+</ul>
+<p>此外，还参考了：</p>
+<ul>
+<li><a href="http://blog.csdn.net/itd018/article/details/51035176" target="_blank" rel="noopener">《osgi确实面临鸡肋之嫌》</a></li>
+</ul>
+<p>阅读前建议先阅读</p>
+<ul>
+<li><a href="https://course.tianmaying.com/osgi-toturial+osgi-concept#0" target="_blank" rel="noopener">《OSGi入门教程》</a></li>
+<li>或者<a href="https://mindawei.github.io/2018/01/31/%E3%80%8AOSGi%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B%E3%80%8B%E7%AC%94%E8%AE%B0/">《OSGi入门教程》笔记</a></li>
+</ul>
+<a id="more"></a>
+<h1 id="走近Java模块化系统OSGi"><a href="#走近Java模块化系统OSGi" class="headerlink" title="走近Java模块化系统OSGi"></a>走近Java模块化系统OSGi</h1><h2 id="OSGi是什么"><a href="#OSGi是什么" class="headerlink" title="OSGi是什么"></a>OSGi是什么</h2><ol>
+<li>OSGi作为Java的模块化规范，其目标（也是软件设计的目标）是复用、内聚、耦合。</li>
+<li>被神化的“动态性”、“热插拔”的特性，是OSGi规范带来的一种可能，需要配合好的设计才能达到，并不是一定会有的。</li>
+<li>OSGi是不是一个应用层面的框架（如spring、structs等），而是设计层面规范，类似面向对象的设计。所以，不要问“怎么将spring和OSGI集成？”这样的问题。</li>
+<li>OSGi的目的是进行模块化，模块（bundle）的物理形式是Jar包。</li>
+<li>OSGi的课程主要是让你去设计应用的，是形而上需要个人领悟的，不是去学一套应用框架那种。</li>
+</ol>
+<h2 id="OSGi-framework"><a href="#OSGi-framework" class="headerlink" title="OSGi framework"></a>OSGi framework</h2><p>OSGi规范定义了一个OSGi framework平台，它是运行在JVM上的应用，负责管理模块bundle。</p>
+<h3 id="bundle生命周期"><a href="#bundle生命周期" class="headerlink" title="bundle生命周期"></a>bundle生命周期</h3><p>bundle需要关注它的生命周期。</p>
+<ol>
+<li>install：框架通过classloader（类加载器）来装载bundle里的类和资源。</li>
+<li>resolve：检查bundle依赖的package是否可用。</li>
+<li>start：运行activator里的start方法，方法运行完毕后进入”ACTIVE”状态，至此bundle可用正式使用了。<br><img src="/images/00006/生命周期层状态转移.png" alt="生命周期层状态转移"></li>
+</ol>
+<h3 id="bundle的隔离"><a href="#bundle的隔离" class="headerlink" title="bundle的隔离"></a>bundle的隔离</h3><ol>
+<li>模块以Jar包形式存在，Jar包的物理边界也是模块的物理边界。</li>
+<li>在OSGi规范下，得显式地说明模块之间的依赖关系。OSGi是利用JVM的classloader和它的父委托模型（PDM:Parent Delegation Mode）来实现这点的。</li>
+<li>每个bundle都分别用一个classloader来加载里面的类，所以不同bundle之间的类，在默认情况下，是互不可见的。</li>
+<li>如果没有额外处理，一个bundle里的类要访问另一个bundle里的类时，通常会出现ClassNotFound的异常。</li>
+</ol>
+<h3 id="bundle之间的耦合"><a href="#bundle之间的耦合" class="headerlink" title="bundle之间的耦合"></a>bundle之间的耦合</h3><p>方式一：import/export package的机制</p>
+<ul>
+<li>OSGi通过import/export package的机制来控制bundle间有限地耦合。</li>
+<li>Export/Import package是通过bundle里的META-INF/manifest.mf文件里指定的。</li>
+</ul>
+<p>方式二：OSGi service方式(更松散的耦合)</p>
+<ul>
+<li>OSGi framework实现服务的注册、查找和使用。该服务是实现某种接口的bean实例。</li>
+<li>该服务是实现某种接口的bean实例，所以本质上osgi service就是一个bean。</li>
+<li>通常会把接口定义在bundle A里，接口的实现则在bundle B里，并将接口实现实例化后注册成osgi service，bundle C可以引用这个service。bundle A需export接口定义所在的package，而bundle B和C则需import这个package。bundle B和C之间就不需用export/import package来耦合了，实现了B和C之间的解耦。</li>
+<li>OSGi应用中，会有大量的osgi service存在，可以说osgi service是osgi规范中最重要的机制，没有之一。</li>
+</ul>
+<h3 id="其它机制"><a href="#其它机制" class="headerlink" title="其它机制"></a>其它机制</h3><p>OSGi规范还提供了Event、配置管理（ConfigAdmin）、声明式服务（Declarative  Service）、Service Tracker、Blueprint等等运行时机制，方便我们构建模块化的应用系统。</p>
+<h1 id="创建OSGi-Hello-World工程"><a href="#创建OSGi-Hello-World工程" class="headerlink" title="创建OSGi Hello World工程"></a>创建OSGi Hello World工程</h1><p>本节内容参考了<a href="https://www.tianmaying.com/tutorial/osgi-helloworld" target="_blank" rel="noopener">《创建OSGi Hello World工程》</a>，需要注意的是，这篇文章中maven配置文件pom.xml中的<code>&lt;name/&gt;</code>标签需要进行修改，不能以冒号分隔，示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;name&gt;osgi-demo&lt;/name&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="模块构建"><a href="#模块构建" class="headerlink" title="模块构建"></a>模块构建</h2><p>1.创建Maven项目。<br>2.在包中创建 OSGI Activator。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package mindw.osgi.demo;</span><br><span class="line"></span><br><span class="line">import org.osgi.framework.BundleActivator;</span><br><span class="line">import org.osgi.framework.BundleContext;</span><br><span class="line"></span><br><span class="line">public class MyActivator implements BundleActivator &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void start(BundleContext context) throws Exception &#123;</span><br><span class="line">		 System.out.println(&quot;Hello world!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void stop(BundleContext context) throws Exception &#123;</span><br><span class="line">		 System.out.println(&quot;Stop bundle!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.配置pom.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot; xmlns:pom=&quot;http://maven.apache.org/POM/4.0.0&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line">    &lt;groupId&gt;mindw.osgi&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;demo&lt;/artifactId&gt;</span><br><span class="line">    &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line">    &lt;version&gt;0.1&lt;/version&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;name&gt;osgi-demo&lt;/name&gt;</span><br><span class="line">   </span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;source&gt;1.8&lt;/source&gt;</span><br><span class="line">                    &lt;target&gt;1.8&lt;/target&gt;</span><br><span class="line">                    &lt;encoding&gt;$&#123;project.build.sourceEncoding&#125;&lt;/encoding&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;archive&gt;</span><br><span class="line">                        &lt;manifest&gt;</span><br><span class="line">                            &lt;addClasspath&gt;true&lt;/addClasspath&gt;</span><br><span class="line">                            &lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt;</span><br><span class="line">                        &lt;/manifest&gt;</span><br><span class="line">                        &lt;manifestEntries&gt;</span><br><span class="line">                            &lt;Class-Path&gt;$&#123;project.build.finalName&#125;.jar&lt;/Class-Path&gt;</span><br><span class="line">                            &lt;Built-By&gt;Ponder&lt;/Built-By&gt;</span><br><span class="line">                            &lt;Bundle-ManifestVersion&gt;2&lt;/Bundle-ManifestVersion&gt;</span><br><span class="line">                            &lt;Bundle-Name&gt;$&#123;project.groupId&#125;.$&#123;project.ArtifactId&#125;&lt;/Bundle-Name&gt;</span><br><span class="line">                            &lt;Bundle-SymbolicName&gt;$&#123;project.name&#125;&lt;/Bundle-SymbolicName&gt;</span><br><span class="line">                            &lt;Bundle-Version&gt;$&#123;project.version&#125;&lt;/Bundle-Version&gt;</span><br><span class="line">                            &lt;Bundle-Vendor&gt;$&#123;project.groupId&#125;&lt;/Bundle-Vendor&gt;</span><br><span class="line">                            &lt;Bundle-Activator&gt;$&#123;project.groupId&#125;.$&#123;project.ArtifactId&#125;.MyActivator&lt;/Bundle-Activator&gt;</span><br><span class="line">                            &lt;Export-Package&gt;$&#123;project.groupId&#125;.$&#123;project.ArtifactId&#125;;version=&quot;0.1&quot;&lt;/Export-Package&gt;</span><br><span class="line">                            &lt;Import-Package&gt;org.osgi.framework&lt;/Import-Package&gt;</span><br><span class="line">                        &lt;/manifestEntries&gt;</span><br><span class="line">                    &lt;/archive&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.osgi&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;org.osgi.core&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;4.2.0&lt;/version&gt;</span><br><span class="line">            &lt;type&gt;jar&lt;/type&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<p>4打包生成 demo-0.1.jar。</p>
+<h2 id="servicemix安装"><a href="#servicemix安装" class="headerlink" title="servicemix安装"></a>servicemix安装</h2><p>为了使用模块，需要一个支持模块化运行的环境，参考文章的作者使用了servicemix。</p>
+<h3 id="servicemix介绍"><a href="#servicemix介绍" class="headerlink" title="servicemix介绍"></a>servicemix介绍</h3><ul>
+<li>Apache ServiceMix是一个灵活、开源的集成容器。</li>
+<li>它可以将Apache ActiveMQ、Camel、CXF和Karaf集成为一个强大的运行平台。</li>
+<li>你可以通过它来建立自己的集成解决方案。</li>
+<li>它提供了一个由OSGi支持的完整、企业级的ESB（企业服务总线）。</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>去<a href="http://servicemix.apache.org/" target="_blank" rel="noopener">servicemix官网</a>下载zip压缩文件。（版本都可，5.4.0版本86M左右，7.0.1版本113M左右）。</li>
+<li>解压压缩包即可。</li>
+</ul>
+<h2 id="模块使用（生命周期变化）"><a href="#模块使用（生命周期变化）" class="headerlink" title="模块使用（生命周期变化）"></a>模块使用（生命周期变化）</h2><ul>
+<li>将demo-0.1.jar放入servicemix的deploy目录下，本人放在 apache-servicemix-5.4.0\deploy 中。</li>
+<li>进入 apache-servicemix-5.4.0\bin 目录，运行 servicemix.bat。可以看到以下界面。”Hello world!”表示模块已经加载。<br><img src="/images/00006/模块启动.png" alt="模块启动"></li>
+<li>使用<code>list</code>命令，可以查看模块状态。可以看到模块ID为220,状态为 Active。<br><img src="/images/00006/模块状态查看.png" alt="模块状态查看"></li>
+<li>输入<code>stop 220</code>，可以看到”Stop bundle!”,然后再输入<code>list</code>，可以看到当前模块处于Resolved状态。<br><img src="/images/00006/模块停止.png" alt="模块停止"></li>
+<li>输入<code>uninstall 220</code>，模块就被卸载了，再输入<code>list</code>就看不到模块信息了。</li>
+<li>conrtrol + d 可以结束servicemix容器运行。</li>
+</ul>
+<h1 id="Package与服务"><a href="#Package与服务" class="headerlink" title="Package与服务"></a>Package与服务</h1><p>该部分可以参考<a href="https://www.tianmaying.com/tutorial/osgi-bundle-coupling" target="_blank" rel="noopener">《OSGi中Bundle间的耦合：Export/Import Package与服务》</a>。</p>
+<h2 id="注册服务"><a href="#注册服务" class="headerlink" title="注册服务"></a>注册服务</h2><p>在BundleActivator的start函数中可以通过BundleContext注册服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class MyActivator implements BundleActivator &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void start(BundleContext context) throws Exception &#123;</span><br><span class="line">		Dictionary&lt;String, String&gt; props = new Hashtable&lt;String, String&gt;();</span><br><span class="line">		props.put(&quot;ServiceName&quot;, &quot;Calculation&quot;);</span><br><span class="line">		context.registerService(ICalculation.class.getName(), new Calculation(), props);</span><br><span class="line">		System.out.println(&quot;Service registered!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h2><p>在BundleActivator的start函数中可以通过BundleContext获得服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class MyActivator implements BundleActivator &#123;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void start(BundleContext context) throws Exception &#123;</span><br><span class="line">		 ServiceReference[] refs = context.getServiceReferences(ICalculation.class.getName(), &quot;(ServiceName=Calculation)&quot;);</span><br><span class="line">         System.out.println(&quot;demo3:&quot;+ICalculation.class.getName());</span><br><span class="line">		 if(refs!=null &amp;&amp; refs.length&gt;0)&#123;</span><br><span class="line">             ICalculation service=(ICalculation)context.getService(refs[0]);</span><br><span class="line">             System.out.println(&quot;1+1=&quot;+service.add(1, 1));</span><br><span class="line">             System.out.println(&quot;2-1=&quot;+service.sub(2, 1));</span><br><span class="line">             System.out.println(&quot;2*3=&quot;+service.sub(2, 3));</span><br><span class="line">         &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="依赖疑问"><a href="#依赖疑问" class="headerlink" title="依赖疑问"></a>依赖疑问</h2><p>在开发中，Demo2中提供服务（包含接口定义），Demo3中使用服务（不包含接口，但依赖接口），但是编译器环境中OSGi模块依赖不能解析，如何表明依赖？翻看作者代码后，发现只要正常添加maven依赖即可，打包的时候不用包含进去。</p>
+<h1 id="动态的OSGi服务"><a href="#动态的OSGi服务" class="headerlink" title="动态的OSGi服务"></a>动态的OSGi服务</h1><p>该部分可以参考<a href="https://www.tianmaying.com/tutorial/osgi-service" target="_blank" rel="noopener">《动态的OSGi服务》</a>。包括：</p>
+<ul>
+<li>OSGI服务的动态性</li>
+<li>Service Listener</li>
+<li>Service Tracker</li>
+</ul>
+<h1 id="初次接触OSGI-Blueprint"><a href="#初次接触OSGI-Blueprint" class="headerlink" title="初次接触OSGI Blueprint"></a>初次接触OSGI Blueprint</h1><p>该部分可以参考<a href="https://www.tianmaying.com/tutorial/osgi-blueprint" target="_blank" rel="noopener">《初次接触OSGI Blueprint》</a>。包括：</p>
+<ul>
+<li>Blueprint简介</li>
+<li>Blueprint的入门例子：OSGI服务的注册</li>
+<li>Blueprint的入门例子：OSGI服务的引用</li>
+<li>OSGI blueprint的机制原理</li>
+</ul>
+<h1 id="OSGi的配置管理：ConfigAdmin"><a href="#OSGi的配置管理：ConfigAdmin" class="headerlink" title="OSGi的配置管理：ConfigAdmin"></a>OSGi的配置管理：ConfigAdmin</h1><p>该部分可以参考<a href="https://www.tianmaying.com/tutorial/osgi-configadmin-service" target="_blank" rel="noopener">《OSGi的配置管理：ConfigAdmin》</a>。包括：</p>
+<ul>
+<li>动态的OSGI配置</li>
+<li>利用blueprint来实现ConfigAdmin</li>
+</ul>
+<h1 id="OSGi还有用武之地吗？"><a href="#OSGi还有用武之地吗？" class="headerlink" title="OSGi还有用武之地吗？"></a>OSGi还有用武之地吗？</h1><ul>
+<li>正面观点，可以参考<a href="http://blog.csdn.net/u013851082/article/details/70214829" target="_blank" rel="noopener">《简单了解osgi》</a>。</li>
+<li>反面观点，可以参考<a href="http://blog.csdn.net/itd018/article/details/51035176" target="_blank" rel="noopener">《osgi确实面临鸡肋之嫌》</a>。</li>
+</ul>
+<p>本人在网上搜索博客的时候，发现OSGi近几年的博客介绍很少，关注度不高，而且学习的OSGi中文网站2015年后也不怎么更新文章了。在分布式微服务流行的现在，OSGi的确有些尴尬，但是个人感觉对于一些复杂的单体应用，OSGi还是有用武之地的，比如Java 9学习了OSGi，增加了模块化功能并重构了Java库。此外，OSGi解决模块依赖的方法和基于接口和模块的设计理念还是很有价值的。</p>
+<p>接下来将对反面观点进行一下介绍。</p>
+<h2 id="明显不足"><a href="#明显不足" class="headerlink" title="明显不足"></a>明显不足</h2><p>OSGi的关注不是很高，该文作者也谈了它本身的一些不足：相对来说适合单体应用（但单体应用也可以通过容器的等帮助部署），不适合分布式。具体如下所示。</p>
+<h3 id="关于隔离与奔溃"><a href="#关于隔离与奔溃" class="headerlink" title="关于隔离与奔溃"></a>关于隔离与奔溃</h3><p>OSGi最终基于jvm，无法对bundle对应的服务实现计算资源的隔离，一个服务的故障依然会导致整个jvm crush,这使得在一个运行时的osgi上部署模块级服务只获得了模块部署和启停隔离。</p>
+<h3 id="关于扩展能力"><a href="#关于扩展能力" class="headerlink" title="关于扩展能力"></a>关于扩展能力</h3><p>服务明确依赖的好处，但是没办法实现计算节点的线性扩展，在当前分布式，微服务，网络计算的趋势下，使得osgi只适合构建单一服务节点的内部应用，但是其分离的bundle的部署负担对于微服务架构来说，有点用大炮打蚊子的臭味。</p>
+<h2 id="推荐的应用架构方式"><a href="#推荐的应用架构方式" class="headerlink" title="推荐的应用架构方式"></a>推荐的应用架构方式</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ul>
+<li>采用“进程间构建的分布式应用”和“进程内的单一应用”分开来进行架构设计。</li>
+<li>对于进程间构建的分布式应用，采取基于soa的理念进行容器模式的服务部署模式，服务交互基于远程服务交互相关协议，采用可忍受网络失败的架构设计原则。</li>
+<li>对于进程内的应用，如果需要模块级的独立生命周期热部署和模块管理，可以考虑采用OSGi。</li>
+</ul>
+<h3 id="容器更方便"><a href="#容器更方便" class="headerlink" title="容器更方便"></a>容器更方便</h3><p>但是，容器内基于本地进程间通信的模块交付方式不仅能提供同样的独立生命热部署和模块管理，而且具备随时脱离出去部署成单独容器级服务应用的能力，加速进程间的服务交付提供的整体管理和监视环境基础。</p>
+<h3 id="OSGi比较适合嵌入式"><a href="#OSGi比较适合嵌入式" class="headerlink" title="OSGi比较适合嵌入式"></a>OSGi比较适合嵌入式</h3><p> OSGi还有用武之地吗？当然我前述都是以构建分布式企业和面向互联网这类应用为前提来讨论的，对于嵌入式的jvm应用，比如著名的osgi案例宝马的车载系统，osgi依然是最好的原则，不过我怀疑基于andriod系统的机制构建类似应用，osgi的采用依然值得商榷。因此，osgi确实面临鸡肋之嫌。</p>
+
+      
+    </div>
+    
+    
+    
+
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" <i class="fa fa-tag"></i> 笔记</a>
+          
+            <a href="/tags/Java/" <i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/OSGi/" <i class="fa fa-tag"></i> OSGi</a>
+          
+            <a href="/tags/模块化/" <i class="fa fa-tag"></i> 模块化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/《OSGi入门教程》笔记/" rel="next" title="《OSGi入门教程》笔记">
+                <i class="fa fa-chevron-left"></i> 《OSGi入门教程》笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/05/Java-9，OSGi和模块化的未来（1）/" rel="prev" title="Java 9，OSGi和模块化的未来（1）">
+                Java 9，OSGi和模块化的未来（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzExNS85Njc0"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="天未" />
+            
+              <p class="site-author-name" itemprop="name">天未</p>
+              <p class="site-description motion-element" itemprop="description">天未欲使从是也，吾辈必济。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mindawei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:m920376513@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                一些链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com/blog/" title="阮一峰" target="_blank">阮一峰</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://calvin1978.blogcn.com/" title="江南白衣" target="_blank">江南白衣</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.useopen.com/blog.html" title="永源中间件" target="_blank">永源中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.christianposta.com/posts/" title="Christian Posta" target="_blank">Christian Posta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="阿里中间件博客" target="_blank">阿里中间件博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#走近Java模块化系统OSGi"><span class="nav-number">1.</span> <span class="nav-text">走近Java模块化系统OSGi</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSGi是什么"><span class="nav-number">1.1.</span> <span class="nav-text">OSGi是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSGi-framework"><span class="nav-number">1.2.</span> <span class="nav-text">OSGi framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bundle生命周期"><span class="nav-number">1.2.1.</span> <span class="nav-text">bundle生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bundle的隔离"><span class="nav-number">1.2.2.</span> <span class="nav-text">bundle的隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bundle之间的耦合"><span class="nav-number">1.2.3.</span> <span class="nav-text">bundle之间的耦合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它机制"><span class="nav-number">1.2.4.</span> <span class="nav-text">其它机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建OSGi-Hello-World工程"><span class="nav-number">2.</span> <span class="nav-text">创建OSGi Hello World工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块构建"><span class="nav-number">2.1.</span> <span class="nav-text">模块构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servicemix安装"><span class="nav-number">2.2.</span> <span class="nav-text">servicemix安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#servicemix介绍"><span class="nav-number">2.2.1.</span> <span class="nav-text">servicemix介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块使用（生命周期变化）"><span class="nav-number">2.3.</span> <span class="nav-text">模块使用（生命周期变化）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Package与服务"><span class="nav-number">3.</span> <span class="nav-text">Package与服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册服务"><span class="nav-number">3.1.</span> <span class="nav-text">注册服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用服务"><span class="nav-number">3.2.</span> <span class="nav-text">引用服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖疑问"><span class="nav-number">3.3.</span> <span class="nav-text">依赖疑问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态的OSGi服务"><span class="nav-number">4.</span> <span class="nav-text">动态的OSGi服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初次接触OSGI-Blueprint"><span class="nav-number">5.</span> <span class="nav-text">初次接触OSGI Blueprint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi的配置管理：ConfigAdmin"><span class="nav-number">6.</span> <span class="nav-text">OSGi的配置管理：ConfigAdmin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi还有用武之地吗？"><span class="nav-number">7.</span> <span class="nav-text">OSGi还有用武之地吗？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#明显不足"><span class="nav-number">7.1.</span> <span class="nav-text">明显不足</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于隔离与奔溃"><span class="nav-number">7.1.1.</span> <span class="nav-text">关于隔离与奔溃</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于扩展能力"><span class="nav-number">7.1.2.</span> <span class="nav-text">关于扩展能力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐的应用架构方式"><span class="nav-number">7.2.</span> <span class="nav-text">推荐的应用架构方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">7.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器更方便"><span class="nav-number">7.2.2.</span> <span class="nav-text">容器更方便</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi比较适合嵌入式"><span class="nav-number">7.2.3.</span> <span class="nav-text">OSGi比较适合嵌入式</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天未</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_site_uv">访客数: <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="powered-by">
+<span id="busuanzi_container_site_pv">浏览数: <span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 75.0k 字</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PjBX2YV1D3nbvkPMKNsiuDL3-gzGzoHsz", "YwhAIPodKeO6mgp79j9QOjf6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

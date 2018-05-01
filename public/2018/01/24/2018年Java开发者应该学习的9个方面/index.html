@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,翻译,建议," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="天未的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;翻译了一篇国外学习建议的文章，希望读者可以受到启发。点击查看原文。文中涉及到的书籍和课程链接是国外购买的网址。 前言&amp;emsp;&amp;emsp;想要新年一开始就有个好计划吗？这里有一些建议可以使你成为一个更好的Java开发者，包括Java性能调优、Spring Security 5.0等方面。&amp;emsp;&amp;emsp;首先，祝你们新的一年快乐。每当新的一年开始，我们都会制定计划、">
+<meta name="keywords" content="Java,翻译,建议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018年Java开发者应该学习的9个方面">
+<meta property="og:url" content="http://mindawei.github.io/2018/01/24/2018年Java开发者应该学习的9个方面/index.html">
+<meta property="og:site_name" content="天未的博客">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;翻译了一篇国外学习建议的文章，希望读者可以受到启发。点击查看原文。文中涉及到的书籍和课程链接是国外购买的网址。 前言&amp;emsp;&amp;emsp;想要新年一开始就有个好计划吗？这里有一些建议可以使你成为一个更好的Java开发者，包括Java性能调优、Spring Security 5.0等方面。&amp;emsp;&amp;emsp;首先，祝你们新的一年快乐。每当新的一年开始，我们都会制定计划、">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mindawei.github.io/images/00005/JVM_architecture.jpg">
+<meta property="og:updated_time" content="2018-02-05T05:57:49.524Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2018年Java开发者应该学习的9个方面">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;翻译了一篇国外学习建议的文章，希望读者可以受到启发。点击查看原文。文中涉及到的书籍和课程链接是国外购买的网址。 前言&amp;emsp;&amp;emsp;想要新年一开始就有个好计划吗？这里有一些建议可以使你成为一个更好的Java开发者，包括Java性能调优、Spring Security 5.0等方面。&amp;emsp;&amp;emsp;首先，祝你们新的一年快乐。每当新的一年开始，我们都会制定计划、">
+<meta name="twitter:image" content="http://mindawei.github.io/images/00005/JVM_architecture.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mindawei.github.io/2018/01/24/2018年Java开发者应该学习的9个方面/"/>
+
+
+
+
+
+  <title>2018年Java开发者应该学习的9个方面 | 天未的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天未的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天未欲使从是也，吾辈必济。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mindawei.github.io/2018/01/24/2018年Java开发者应该学习的9个方面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天未">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天未的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2018年Java开发者应该学习的9个方面</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-24T16:26:56+08:00">
+                2018-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/24/2018年Java开发者应该学习的9个方面/" class="leancloud_visitors" data-flag-title="2018年Java开发者应该学习的9个方面">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,256
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;翻译了一篇国外学习建议的文章，希望读者可以受到启发。<a href="https://dzone.com/articles/5-things-java-programmer-should-learn-in-2018" target="_blank" rel="noopener">点击查看原文</a>。文中涉及到的书籍和课程链接是国外购买的网址。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&emsp;&emsp;想要新年一开始就有个好计划吗？这里有一些建议可以使你成为一个更好的Java开发者，包括Java性能调优、Spring Security 5.0等方面。<br>&emsp;&emsp;首先，祝你们新的一年快乐。每当新的一年开始，我们都会制定计划、建立目标或者思考一些解决方法。<br>&emsp;&emsp;成为一个Java开发者和<a href="http://www.java67.com/" target="_blank" rel="noopener">《Java blog》</a>的作者之后，我经常收到全世界Java开发者的一些咨询：如何可以提升他们的能力。<br>&emsp;&emsp;之前，我分享过我的一篇文章<a href="https://javarevisited.blogspot.com/2014/01/10-tips-to-improve-programming-skill-become-better-programmer.html
+" target="_blank" rel="noopener">《10 tips to become a better programmer》</a>（《10条关于如何成为更好的开发者的建议》），文章中每条建议现在看来都还未过时，但是既然是新的一年了，我还是觉得写一些建议给那些愿意提高自己的Java开发者，从而帮助他们增加Java编程的知识和职业生涯中的个人价值。<br>&emsp;&emsp;不废话了，让我们看看是哪9条建议吧。你可以参考这些建议，然后确定适合自己的n个小目标。</p>
+<a id="more"></a>
+<h1 id="学习Java性能调优"><a href="#学习Java性能调优" class="headerlink" title="学习Java性能调优"></a>学习Java性能调优</h1><p>&emsp;&emsp;在过去的几年里，我访谈了50多位高级Java开发人员，通过交谈发现，这些人员最缺少的知识之一就是对于Java虚拟机内部机制、GC原理和Java性能调优的了解。</p>
+<p><img src="/images/00005/JVM_architecture.jpg" alt="JVM结构"></p>
+<p>&emsp;&emsp;随着你经验的增长，你将成为一个具有5到6年经验的高级Java开发人员，此时，你应该具备对Java基本原理的宏观理解，并能知晓各个实现的细节。<br>&emsp;&emsp;如果你不能够优化你的应用，具体来说是你无法弄清楚知晓应用为什么跑的那么慢？它的瓶颈在哪里？如何进行优化？那你需要阅读一些关于Java虚拟机原理和新性能调优方面的书籍。例如：Scott Oaks的名著<a href="https://www.amazon.com/Java-Performance-The-Definitive-Guide/dp/1449358454?tag=javamysqlanta-20" target="_blank" rel="noopener">《Java Performance the Definitive Guide》</a>（Java权威性能手册）。<br>&emsp;&emsp;这本书我这几年都在读，只要一有空就会打开来看看，今年还准备再读一次。<br>&emsp;&emsp;如果你比较喜欢在线课程的话，我建议你可以看一下在Pluarlsight网站上的<a href="https://www.pluralsight.com/courses/understanding-java-vm-memory-management?aid=7010a000001xAGNAA2&utm_medium=digital_affiliate&utm_source=ShareASale&utm_campaign=880419" target="_blank" rel="noopener">《Understanding the Java Virtual Machine 》</a>课程，这个课程解释了内存管理、类加载、安全机制、反射等内容。</p>
+<h1 id="每天编程2小时"><a href="#每天编程2小时" class="headerlink" title="每天编程2小时"></a>每天编程2小时</h1><p>&emsp;&emsp;去年我注意到的另外一件事是：随着你经验的增加，你会花很多的时间在沟通协调、回复邮件、解决问题纠纷、指导工作上面，通常来说你已经成了一个项目经理。<br>&emsp;&emsp;除了这些事情，你忘记了程序员最重要的一个技能，就是编程。<br>&emsp;&emsp;如果你觉得你写的代码还不够，那你得想个办法每天写点代码。或者至少写点东西，让它成为你项目的一部分，或者是一个开源的框架，或者是一个开发包，或者是一个开发工具，等等。<br>&emsp;&emsp;万事开头难，我建以你克服阻力，开始阅读和重构代码来获得快乐。在过程中，你会得到享受并且也会开始写些代码。<br>&emsp;&emsp;你也可以阅读《Cracking the Coding Interview, 150 Programming Questions》。这不仅可以让你做好面试准备，也可以提高多数据结构、算法和编程逻辑的理解。</p>
+<h1 id="每个月都对Java应用做一次优化"><a href="#每个月都对Java应用做一次优化" class="headerlink" title="每个月都对Java应用做一次优化"></a>每个月都对Java应用做一次优化</h1><p>&emsp;&emsp;这个方法需要和第一个方法（读一些Java虚拟机和性能调优方面好的书籍）相结合。光读书是不够的，你需要将学到的知识应用到你的项目中去。<br>&emsp;&emsp;我建议你至少每个月都对Java应用进行一次优化，并且要花足够的时间去分析和理解优化的结果。<br>&emsp;&emsp;例如，如果你的程序最近奔溃过，你可以将Java堆状况导出，然后分析：哪个对象占用的内存最大？在你的项目中是否存在内存泄露？<br>&emsp;&emsp;现象的原因是啥？当有超过10万个客户端链接你的服务是会发生什么？如果你可以回答这些问题，那么你干的不错。如果你需要一些关于解决内存和CPU问题的指导，那么我建议你可以看一下Richard Warburton写的<a href="https://www.pluralsight.com/courses/java-understanding-solving-memory-problems?aid=7010a000001xAGNAA2&utm_medium=digital_affiliate&utm_source=ShareASale&utm_campaign=880419" target="_blank" rel="noopener">《Understanding and Solving Java Memory Problems》</a>。</p>
+<h1 id="参加编码挑战"><a href="#参加编码挑战" class="headerlink" title="参加编码挑战"></a>参加编码挑战</h1><p>&emsp;&emsp;这个建议和第二个建议（每天编程2小时）相关。事实上，有时你在当前的工作中无法获得足够的挑战。<br>&emsp;&emsp;如果渴望编程挑战，那么参加相关编程挑战的比赛就再好不过了。<br>&emsp;&emsp;网上有很多编程网站可以给你锻炼和测试的机会，其中比较推荐的是TopCoder。<br>&emsp;&emsp;如果你在寻找一些困难的编程挑战，那么你可以查看我之前写的一个关于在线编程网站的列表。</p>
+<h1 id="学习Java网络编程"><a href="#学习Java网络编程" class="headerlink" title="学习Java网络编程"></a>学习Java网络编程</h1><p>&emsp;&emsp;我交流过程中发现的一点是：Java开发者需要提高他们的socket编程能力和网络基础。<br>&emsp;&emsp;我从网络编程问题列表中挑选了一些问题进行询问，但是很多开发者很多问题都没有回答好。<br>&emsp;&emsp;他们中的一些甚至还需要去了解TCP和UDP的差别。这个问题我认为对于有2到5年的Java开发者来说已经太基础了，甚至没有问的必要。<br>&emsp;&emsp;如果你觉得你没有获得足够的机会去学习网络编程，或者你是一个和JSP、Servlet、JSF打交道的Java Web开发者，那么我建议你至少看一下Java网络、NIO、socket编程方面的一本好书。<br>&emsp;&emsp;一本值得推荐的书是《TCP/IP Sockets in Java, Second Edition, Practical Guide for Programmers》。这本书易读、有趣，是一个学习socket编程基础的好途径。</p>
+<h1 id="Java-9"><a href="#Java-9" class="headerlink" title="Java 9"></a>Java 9</h1><p>&emsp;&emsp;2017年有一些重大的发布，其中之一就是JDK 9。2018年，我第一件事就是准备研究一下JDK 9。如果你想要了解Java 9的一些新特性，包括：Jigsaw、Reactive Streams、API改进等等，那么<a href="https://www.udemy.com/java-the-complete-java-developer-course/?siteID=JVFxdTr9V80-N83HONr8It.xQ37MmRwWdA&LSNPUBID=JVFxdTr9V80" target="_blank" rel="noopener">《Java 9 MasterClass》</a>课程是个不错的开始。</p>
+<h1 id="Spring-5-0"><a href="#Spring-5-0" class="headerlink" title="Spring 5.0"></a>Spring 5.0</h1><p>&emsp;&emsp;Java业界另一个比较大的发布是Spring Framework 5.0。Spring 5.0带来了很多振奋人心的新特性，包括：响应式函数编程模型，采用了Java 8 和 9 的新特性等。<br>&emsp;&emsp;在2018年，Spring 5.0的发展将会提速，这也是值得每个Java开发者需要学习的原因。如果你需要一些指导，那么<a href="https://www.udemy.com/spring-framework-5-beginner-to-guru/?siteID=JVFxdTr9V80-nhgSvlttSkfCoMHNNwzPOA&LSNPUBID=JVFxdTr9V80" target="_blank" rel="noopener">《Spring 5.0: Beginner to Guru》</a>课程将是不错的选择。</p>
+<h1 id="Spring-Security-5-0"><a href="#Spring-Security-5-0" class="headerlink" title="Spring Security 5.0"></a>Spring Security 5.0</h1><p>&emsp;&emsp;2017年另一个有趣的发布是Spring Security 5.0，这也是我在2018年将要学习的一个内容。Spring Security 5.0是一个重要的发布版本，开发人员重写了很多模块，并且修复了上百个bug。其中比较有意思的一个部分是OAuth 2.0模块。遗憾的是，目前没有特别多的资料来学习Spring Security 5.0。值得庆幸的是，Eugen 更新了他的课程<a href="https://courses.baeldung.com/p/learn-spring-security-the-master-class?utm_source=javarevisited&utm_medium=web&utm_campaign=lss&affcode=22136_bkwjs9xa" target="_blank" rel="noopener">《Learn Spring Security》</a>，包含了版本5.0以及OAuth 2.0模块。</p>
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p>&emsp;&emsp;如果你想在2018年更上一层楼，那么你需要继续提高你的单元测试技巧。这里的测试不仅仅是指单元测试，而且包括通常说的自动化测试，当然也包括集成测试。你可以学习JUnit5以及一些其它比较高级的单元测试库，例如：Mockito、 PowerMock、Cucumber、Robot 等，从而使你的测试能力提高一个等级。Mockito功能非常强大，可以通过模拟依赖帮助你对一个复杂的对象进行测试。如果你刚刚接触单元测试并且希望在2018年进行学习，那么Udemy 的课程<a href="https://www.udemy.com/junitandmockitocrashcourse/?siteID=JVFxdTr9V80-xIeIJmoH99xJW3BHhUJMHg&LSNPUBID=JVFxdTr9V80" target="_blank" rel="noopener">《JUnit and Mockito Crash Course》</a>是个不错的选择。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;&emsp;这只是我的一些建议。如果你从事Java开发有些年头了，那么你可以参考这些要点制定自己的目标。比如，你还可以添加<a href="https://javarevisited.blogspot.sg/2017/12/top-5-android-online-training-courses-for-Java-developers.html" target="_blank" rel="noopener">Android</a>、<a href="https://javarevisited.blogspot.sg/2017/12/top-10-pluralsight-courses-java-and-web-developers.html" target="_blank" rel="noopener">Docker</a>、<a href="https://javarevisited.blogspot.sg/2017/12/top-5-courses-to-learn-big-data-and.html" target="_blank" rel="noopener">Spark</a>等条目，因为这些对于Java开发者也很重要。<br>&emsp;&emsp;我之所以将这些目标制定的简单并容易实现，是因为我个人认为巨大的进步是有一点一点的小进步堆积而成的。设置小目标表比大目标更容易实现，往往一些大目标在制定的时候就已经注定无法实现。<br>&emsp;&emsp;所以，你还在等什么那？写下你新年的目标并和我们分享。等这一年结束，你可以再过来看看，告诉我们多少目标你已经达成。</p>
+
+      
+    </div>
+    
+    
+    
+
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" <i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/翻译/" <i class="fa fa-tag"></i> 翻译</a>
+          
+            <a href="/tags/建议/" <i class="fa fa-tag"></i> 建议</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/22/2018人工智能标准化白皮书摘要/" rel="next" title="2018人工智能标准化白皮书摘要">
+                <i class="fa fa-chevron-left"></i> 2018人工智能标准化白皮书摘要
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/31/《OSGi入门教程》笔记/" rel="prev" title="《OSGi入门教程》笔记">
+                《OSGi入门教程》笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzExNS85Njc0"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="天未" />
+            
+              <p class="site-author-name" itemprop="name">天未</p>
+              <p class="site-description motion-element" itemprop="description">天未欲使从是也，吾辈必济。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mindawei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:m920376513@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                一些链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com/blog/" title="阮一峰" target="_blank">阮一峰</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://calvin1978.blogcn.com/" title="江南白衣" target="_blank">江南白衣</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.useopen.com/blog.html" title="永源中间件" target="_blank">永源中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.christianposta.com/posts/" title="Christian Posta" target="_blank">Christian Posta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="阿里中间件博客" target="_blank">阿里中间件博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习Java性能调优"><span class="nav-number">2.</span> <span class="nav-text">学习Java性能调优</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每天编程2小时"><span class="nav-number">3.</span> <span class="nav-text">每天编程2小时</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每个月都对Java应用做一次优化"><span class="nav-number">4.</span> <span class="nav-text">每个月都对Java应用做一次优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参加编码挑战"><span class="nav-number">5.</span> <span class="nav-text">参加编码挑战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习Java网络编程"><span class="nav-number">6.</span> <span class="nav-text">学习Java网络编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-9"><span class="nav-number">7.</span> <span class="nav-text">Java 9</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-5-0"><span class="nav-number">8.</span> <span class="nav-text">Spring 5.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Security-5-0"><span class="nav-number">9.</span> <span class="nav-text">Spring Security 5.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单元测试"><span class="nav-number">10.</span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天未</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_site_uv">访客数: <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="powered-by">
+<span id="busuanzi_container_site_pv">浏览数: <span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 75.0k 字</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PjBX2YV1D3nbvkPMKNsiuDL3-gzGzoHsz", "YwhAIPodKeO6mgp79j9QOjf6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
