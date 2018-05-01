@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="笔记,Netty,Java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="天未的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="点击查看 《Netty in Action》笔记目录。 本文是对《Netty in Action》第4章内容的笔记和翻译，主要内容包括：  OIO：阻塞传输 NIO：异步传输 本地传输：和 JVM 异步交互 测试你的 ChannelHandler">
+<meta name="keywords" content="笔记,Netty,Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04 传输">
+<meta property="og:url" content="http://mindawei.github.io/2018/02/11/04 传输/index.html">
+<meta property="og:site_name" content="天未的博客">
+<meta property="og:description" content="点击查看 《Netty in Action》笔记目录。 本文是对《Netty in Action》第4章内容的笔记和翻译，主要内容包括：  OIO：阻塞传输 NIO：异步传输 本地传输：和 JVM 异步交互 测试你的 ChannelHandler">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/01.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/02.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/03.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/04.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/05.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/06.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/07.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/08.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00012/09.png">
+<meta property="og:updated_time" content="2018-05-01T03:43:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="04 传输">
+<meta name="twitter:description" content="点击查看 《Netty in Action》笔记目录。 本文是对《Netty in Action》第4章内容的笔记和翻译，主要内容包括：  OIO：阻塞传输 NIO：异步传输 本地传输：和 JVM 异步交互 测试你的 ChannelHandler">
+<meta name="twitter:image" content="http://mindawei.github.io/images/00012/01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mindawei.github.io/2018/02/11/04 传输/"/>
+
+
+
+
+
+  <title>04 传输 | 天未的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天未的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天未欲使从是也，吾辈必济。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mindawei.github.io/2018/02/11/04 传输/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天未">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天未的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">04 传输</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-11T11:03:22+08:00">
+                2018-02-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Netty/" itemprop="url" rel="index">
+                    <span itemprop="name">Netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/11/04 传输/" class="leancloud_visitors" data-flag-title="04 传输">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,373
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>点击查看 <a href="https://mindawei.github.io/2018/03/01/%E3%80%8ANetty-in-Action%E3%80%8B%E7%AC%94%E8%AE%B0%E7%9B%AE%E5%BD%95/">《Netty in Action》笔记目录</a>。</p>
+<p>本文是对<a href="https://download.csdn.net/download/u010738033/10245651" target="_blank" rel="noopener">《Netty in Action》</a>第4章内容的笔记和翻译，主要内容包括：</p>
+<ul>
+<li>OIO：阻塞传输</li>
+<li>NIO：异步传输</li>
+<li>本地传输：和 JVM 异步交互</li>
+<li>测试你的 <code>ChannelHandler</code></li>
+</ul>
+<a id="more"></a>
+<h2 id="案例学习：传输迁移"><a href="#案例学习：传输迁移" class="headerlink" title="案例学习：传输迁移"></a>案例学习：传输迁移</h2><h3 id="不通过-Netty-使用-OIO-和-NIO"><a href="#不通过-Netty-使用-OIO-和-NIO" class="headerlink" title="不通过 Netty 使用 OIO 和 NIO"></a>不通过 Netty 使用 OIO 和 NIO</h3><p>我们将要展示基于 JDK API 的阻塞（OIO）和异步（NIO）应用版本。下面展示了阻塞实现版本。<br><img src="/images/00012/01.png" alt=""></p>
+<p>下面展示了非阻塞版本。<br><img src="/images/00012/02.png" alt=""></p>
+<h3 id="通过-Netty-使用-OIO-和-NIO"><a href="#通过-Netty-使用-OIO-和-NIO" class="headerlink" title="通过 Netty 使用 OIO 和 NIO"></a>通过 Netty 使用 OIO 和 NIO</h3><p><img src="/images/00012/03.png" alt=""></p>
+<h3 id="非阻塞-Netty-版本"><a href="#非阻塞-Netty-版本" class="headerlink" title="非阻塞 Netty 版本"></a>非阻塞 Netty 版本</h3><p><img src="/images/00012/04.png" alt=""></p>
+<p>因为 Netty 对每一种传输实现都暴露了相同的 API，所以无论你采用哪一种传输，你的代码几乎不用修改。</p>
+<h2 id="传输-API"><a href="#传输-API" class="headerlink" title="传输 API"></a>传输 API</h2><p>传输 API 的核心是 <code>Channel</code> 接口，所有的 I/O 操作都会使用这个接口。<code>Channel</code> 类的继承关系如图4.1所示。</p>
+<p><code>Channel</code> 中组合了 <code>ChannelPipeline</code> 和 <code>ChannelConfig</code>。<code>ChannelConfig</code> 保存了 <code>Channel</code> 所有的配置，并且支持热更新。 </p>
+<p>由于 <code>Channel</code> 是独一无二的，所以 <code>Channel</code> 继承了 <code>java.lang.Comparable</code> 接口，从而保证对象的有序。因此，如果两个 <code>Channel</code> 实例返回相同的 hash 值，那 <code>AbstractChannel</code> 中 <code>compareTo()</code> 的实现将会抛出 <code>Error</code>。</p>
+<p><img src="/images/00012/05.png" alt="图4.1 Channel接口继承关系" title="图4.1 Channel接口继承关系"></p>
+<p><code>ChannelHandler</code> 常用于：</p>
+<ul>
+<li>转换数据格式。</li>
+<li>提供异常通知。</li>
+<li>提供 <code>Channel</code> 被激活或者关闭的通知。</li>
+<li>提供 <code>Channel</code> 从 <code>EventLoop</code> 中注册和取消注册的通知。 </li>
+<li>提供用户定义事件的通知。</li>
+</ul>
+<blockquote>
+<p><strong>拦截过滤器</strong><br><code>ChannelPipeline</code> 实现了一个常用设计模式:拦截过滤器。UNIX 管道是这个模式的另一个典型例子：命令被链式编排，每个命令的输出会作为接下来一个命令的输入。</p>
+</blockquote>
+<p>你同样可以在运行时按照你的需求为 <code>ChannelPipeline</code> 添加或删除 <code>ChannelHandler</code>。</p>
+<p>除了可以使用 <code>ChannelPipeline</code> 和 <code>ChannelConfig</code> 之外，你还可以使用 <code>Channel</code> 的方法，下表展示了一些常用的方法。</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eventLoop</code></td>
+<td>返回与 <code>Channel</code> 绑定的 <code>EventLoop</code>。 </td>
+</tr>
+<tr>
+<td><code>pipeline</code></td>
+<td>返回与 <code>Channel</code> 绑定的 <code>ChannelPipeline</code>。</td>
+</tr>
+<tr>
+<td><code>isActive</code></td>
+<td>如果 <code>Channel</code> 是激活（active）的，返回 <code>true</code>。 Active 的含义取决于下层的传输协议。例如, <code>Socket</code> 中的 active 是指与远端建立连接；<code>Datagram</code> 中的 active 是指 <code>Datagram</code> 打开。</td>
+</tr>
+<tr>
+<td><code>localAddress</code></td>
+<td>返回本地的 <code>SocketAddress</code>. </td>
+</tr>
+<tr>
+<td><code>remoteAddress</code></td>
+<td>返回远端的 <code>SocketAddress</code>.</td>
+</tr>
+<tr>
+<td><code>write</code></td>
+<td>将数据写到远端。数据会经过 <code>ChannelPipeline</code>，并将会进行排队，直到刷新时才会发送。</td>
+</tr>
+<tr>
+<td><code>flush</code></td>
+<td>将之前写的数据刷新到底层的传输协议中，例如：<code>Socket</code>。</td>
+</tr>
+<tr>
+<td><code>writeAndFlush</code></td>
+<td>先调用 <code>write()</code> ，然后调用 <code>flush()</code>。</td>
+</tr>
+</tbody>
+</table>
+<p>下图展示了如何利用 <code>Channel.writeAndFlush()</code> 实现最常见的发送数据到远端的任务。<br><img src="/images/00012/06.png" alt=""></p>
+<p>Netty 的 <code>Channel</code> 实现是<strong>线程安全的</strong>，所以你可以存储 <code>Channel</code> 的一个引用，并且在你需要发送数据的时候使用它，即使在多线程环境中也没有关系。<br><img src="/images/00012/07.png" alt=""></p>
+<h2 id="包含的传输"><a href="#包含的传输" class="headerlink" title="包含的传输"></a>包含的传输</h2><p>下表展示了 Netty 中提供的传输。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>所在的包</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NIO</td>
+<td><code>io.netty.channel.socket.nio</code></td>
+<td>以 <code>java.nio.channels</code> 包为基础，是一个基于 selector 的实现方案。</td>
+</tr>
+<tr>
+<td>Epoll</td>
+<td><code>io.netty.channel.epoll</code></td>
+<td>通过 JNI 使用 <code>epoll()</code> 进入非阻塞 IO。这个传输的特性只适用于 Linux，如：<code>SO_REUSEPORT</code>。它比 NIO 传输要快，是完全非阻塞。</td>
+</tr>
+<tr>
+<td>OIO</td>
+<td><code>io.netty.channel.socket.oio</code></td>
+<td>使用 <code>java.net</code> 包作为基础，使用阻塞流。</td>
+</tr>
+<tr>
+<td>Local</td>
+<td><code>io.netty.channel.local</code></td>
+<td>一个本地传输，可以被用来通过管道与 VM 交互。</td>
+</tr>
+<tr>
+<td>Embedded</td>
+<td><code>io.netty.channel.embedded</code></td>
+<td>一个嵌入式传输协议。通过它，你可以在虚拟的传输协议上使用 <code>ChannelHandler</code>。这在测试 <code>ChannelHandler</code> 实现时很有用。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="NIO-—-非阻塞-I-O"><a href="#NIO-—-非阻塞-I-O" class="headerlink" title="NIO — 非阻塞 I/O"></a>NIO — 非阻塞 I/O</h3><p>Selector 背后基本的原理是：提供一个注册器，通过注册感兴趣的事件，当 <code>Channel</code> 状态改变的时候你可以得到通知。可能的状态改变包括：</p>
+<ul>
+<li>新的 <code>Channel</code> 被接收到并且已经准备好。</li>
+<li><code>Channel</code> 连接已经完成。</li>
+<li><code>Channel</code> 已经准备好为读操作提供数据。</li>
+<li><code>Channel</code> 已经准备好，可以写入数据了。</li>
+</ul>
+<p>下表展示了 <code>java.nio.channels.SelectionKey</code> 类定义的一些模式。</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OP_ACCEPT</td>
+<td>当一个新的请求被接受并且 <code>Channel</code> 被创建的时候，会进行通知。</td>
+</tr>
+<tr>
+<td>OP_CONNECT</td>
+<td>当连接建立的时候，会进行通知。</td>
+</tr>
+<tr>
+<td>OP_READ</td>
+<td>当可以从 <code>Channel</code> 中读取数据的时候，会进行通知。</td>
+</tr>
+<tr>
+<td>OP_WRITE</td>
+<td>当可以往 <code>Channel</code> 中写入更多数据的时候，会进行通知。这个事件在 socket 缓存被填满的时候发生，通常意味着数据发送的速率操过了远端的处理能力。</td>
+</tr>
+</tbody>
+</table>
+<p>NIO 内部实现的细节，在所有的 Netty 用户级别的 API 中都被隐藏了。图4.2 展示了处理的数据流。</p>
+<p><img src="/images/00012/08.png" alt="图4.2 选择和处理状态改变" title="图4.2 选择和处理状态改变"></p>
+<blockquote>
+<p><strong>零拷贝</strong><br>零拷贝这个特性目前只在 NIO 和 Epoll 传输中被支持。通过它可以使你快速并高效地从一个文件系统转移数据到网络中，不需要从内核空间拷贝到用户空间，这大大提高了 FTP、HTTP 等协议的传输效率。这个特性并不是被所有的操作系统支持。确切地说，它并不适用于采用加密或压缩的文件系统，只有文件的原始数据可以被转移。但对于已经加密好的文件是可以被传输的。</p>
+</blockquote>
+<h3 id="Epoll-—-针对-Linux-的原生非阻塞传输"><a href="#Epoll-—-针对-Linux-的原生非阻塞传输" class="headerlink" title="Epoll — 针对 Linux 的原生非阻塞传输"></a>Epoll — 针对 Linux 的原生非阻塞传输</h3><p>Netty 为 Linux 系统提供了一个使用 epoll 的 NIO API。在某种程度上，这与 Netty 本身的设计更加一致，并且比中断的实现方式开销更少。如果你的应用准备在 Linux 上使用，那么可以考虑这个版本，你会发现在高负载的情况下，它的性能表现会好于 JDK 本生的 NIO 实现。</p>
+<p>这个传输和图4.2中展示的传输语义相同，并且它的使用是很简单的，可以参考 list 4.4。为了使用 epoll 版的 NIO，可以将 <code>NioEventLoopGroup</code> 替换为 <code>EpollEventLoopGroup</code>，将 <code>NioServerSocketChannel.class</code> 替换为 <code>EpollServerSocketChannel.class</code>。</p>
+<h3 id="OIO-—-阻塞型-I-O"><a href="#OIO-—-阻塞型-I-O" class="headerlink" title="OIO — 阻塞型 I/O"></a>OIO — 阻塞型 I/O</h3><p><img src="/images/00012/09.png" alt="图4.3 OIO 处理逻辑" title="图4.3 OIO 处理逻辑"></p>
+<p>你可能会对此感到好奇：Netty 是如何通过相同的 API 来支持异步传输的 NIO？答案是 Netty 使用了 <code>SO_TIMEOUT Socket</code> 标志。 这个标志表明等待 I/O 操作完成的最大毫秒数。如果操作在指定的时间间隔内没有完成，那么将会抛出 <code>SocketTimeoutException</code>。Netty 会捕捉这个异常，并继续循环处理。</p>
+<h3 id="Local-—-通过本地传输与-JVM-交互"><a href="#Local-—-通过本地传输与-JVM-交互" class="headerlink" title="Local — 通过本地传输与 JVM 交互"></a>Local — 通过本地传输与 JVM 交互</h3><p>Netty 为同一个 JVM 上的客户端和服务端的异步交互提供了一个本地传输。 </p>
+<p>因为本地传输并没有真正的网络传输，所以它不能和其它传输协议一起协作。因此，一个客户端如果想通过这个传输来连接服务端的话（在同一个 JVM 上），服务端也必须使用这个传输。除了这个限制，它的使用和其它传输协议是一样的。</p>
+<h3 id="嵌入传输"><a href="#嵌入传输" class="headerlink" title="嵌入传输"></a>嵌入传输</h3><p>Netty 还提供了一个传输，可以允许你嵌入在 <code>ChannelHandler</code> 中嵌入一个帮助类 <code>ChannelHandler</code>。在这种模式下，你可以扩展 <code>ChannelHandler</code> 的功能，而不用内部的代码。</p>
+<h2 id="传输使用例子"><a href="#传输使用例子" class="headerlink" title="传输使用例子"></a>传输使用例子</h2><p>下表展示了当前版本中传输支持的协议。</p>
+<table>
+<thead>
+<tr>
+<th>Transport</th>
+<th>TCP</th>
+<th>UDP</th>
+<th>SCTP</th>
+<th>UDT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NIO</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>Linux 上的 Epoll</td>
+<td>支持</td>
+<td>支持</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>OIO</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>在 Linux 上开启 SCTP</strong><br>SCTP 需要内核支持并且需要安装一些用户库。例如，在 Ubuntu 上可以使用下面的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo apt-get install libsctp1</span><br></pre></td></tr></table></figure></p>
+<p>在 Fedora 上，你需要使用 yum：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sudo yum install kernel-modules-extra.x86_64 lksctp-tools.x86_64</span><br></pre></td></tr></table></figure></p>
+<p>请阅读你的 Linux 发布版本的手册，了解如何开启 SCTP。</p>
+</blockquote>
+<p>下面是你可能会遇到的一些用例。</p>
+<ul>
+<li><strong>基于非阻塞的代码</strong>：如果你在你的代码中不阻塞调用，或者你要限制阻塞的调用，推荐使用 NIO（在 Linux 上使用 epoll）。NIO/epoll 主要是用于处理很多并发的连接，在数量较少的时候变现的也不错，尤其是在多个连接共享线程的情况下。</li>
+<li><strong>基于阻塞的代码</strong>：正如我们之前提过，如果你的代码很依赖阻塞 I/O，并且你应用具有相应的设计，那么你直接从阻塞 I/O 切换到 Netty 的 NIO 传输，可能会遇到麻烦。最好不要直接重写代码来适应新的 I/O, 可以考虑一个阶段性的迁移：从 OIO 开始，迁移到 NIO（或者你使用 Linux 的话就是 epoll）。</li>
+<li><strong>在同一个 JVM 上进行交互</strong>：如果要在同一个 JVM 上进行交互不需要使用网络，使用本地传输再恰当不过了。这可以在使用 Netty 代码的同时消除真实网络的开销。如果你需要在真实网络上使用该服务，你只需将传输替换为 NIO 或者 OIO。</li>
+<li><strong>测试你的 ChannelHandler 实现</strong>：如果你想为你的 <code>ChannelHandler</code> 实现写单元测试，可以考虑使用嵌入传输。这可以使得你在测试实现的时候不用创建很多的模拟对象。你写的类还是会和通用的 API 事件流保持一致，保证 <code>ChannelHandler</code> 在真实传输上表现正确。 </li>
+</ul>
+<p>下表总结了我们提到过的用例。</p>
+<table>
+<thead>
+<tr>
+<th>应用需求</th>
+<th>推荐使用的协议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非阻塞或者普通的尝试</td>
+<td>NIO（或者在 Linux 上使用 epoll）</td>
+</tr>
+<tr>
+<td>阻塞</td>
+<td>OIO</td>
+</tr>
+<tr>
+<td>在同一个 JVM 上交互</td>
+<td>Local</td>
+</tr>
+<tr>
+<td>测试你的 ChannelHandler  实现</td>
+<td>Embedded</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" <i class="fa fa-tag"></i> 笔记</a>
+          
+            <a href="/tags/Netty/" <i class="fa fa-tag"></i> Netty</a>
+          
+            <a href="/tags/Java/" <i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/10/03 Netty的组件和设计/" rel="next" title="03 Netty的组件和设计">
+                <i class="fa fa-chevron-left"></i> 03 Netty的组件和设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/12/05 ByteBuf/" rel="prev" title="05 ByteBuf">
+                05 ByteBuf <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzExNS85Njc0"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="天未" />
+            
+              <p class="site-author-name" itemprop="name">天未</p>
+              <p class="site-description motion-element" itemprop="description">天未欲使从是也，吾辈必济。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mindawei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:m920376513@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                一些链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com/blog/" title="阮一峰" target="_blank">阮一峰</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://calvin1978.blogcn.com/" title="江南白衣" target="_blank">江南白衣</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.useopen.com/blog.html" title="永源中间件" target="_blank">永源中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.christianposta.com/posts/" title="Christian Posta" target="_blank">Christian Posta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="阿里中间件博客" target="_blank">阿里中间件博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例学习：传输迁移"><span class="nav-number">1.</span> <span class="nav-text">案例学习：传输迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不通过-Netty-使用-OIO-和-NIO"><span class="nav-number">1.1.</span> <span class="nav-text">不通过 Netty 使用 OIO 和 NIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-Netty-使用-OIO-和-NIO"><span class="nav-number">1.2.</span> <span class="nav-text">通过 Netty 使用 OIO 和 NIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞-Netty-版本"><span class="nav-number">1.3.</span> <span class="nav-text">非阻塞 Netty 版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输-API"><span class="nav-number">2.</span> <span class="nav-text">传输 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包含的传输"><span class="nav-number">3.</span> <span class="nav-text">包含的传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO-—-非阻塞-I-O"><span class="nav-number">3.1.</span> <span class="nav-text">NIO — 非阻塞 I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Epoll-—-针对-Linux-的原生非阻塞传输"><span class="nav-number">3.2.</span> <span class="nav-text">Epoll — 针对 Linux 的原生非阻塞传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OIO-—-阻塞型-I-O"><span class="nav-number">3.3.</span> <span class="nav-text">OIO — 阻塞型 I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Local-—-通过本地传输与-JVM-交互"><span class="nav-number">3.4.</span> <span class="nav-text">Local — 通过本地传输与 JVM 交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌入传输"><span class="nav-number">3.5.</span> <span class="nav-text">嵌入传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输使用例子"><span class="nav-number">4.</span> <span class="nav-text">传输使用例子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天未</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_site_uv">访客数: <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="powered-by">
+<span id="busuanzi_container_site_pv">浏览数: <span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 75.5k 字</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PjBX2YV1D3nbvkPMKNsiuDL3-gzGzoHsz", "YwhAIPodKeO6mgp79j9QOjf6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

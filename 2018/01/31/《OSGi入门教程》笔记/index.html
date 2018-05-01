@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="笔记,Java,模块化,OSGi," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="天未的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本文是对《OSGi入门教程》课程的笔记。 OSGi基础概念基本概念OSGi的一些定义 Open Services Gateway initative 开发服务网关协议 是指Java的动态模块化系统的一系列规范。（OSGi联盟，osgi.org） OSGi Alliance 组织 以及该组织指制定的一个基于Java语言的服务规范。(Wiki) Java 平台的模块层。(《OSGi in Action">
+<meta name="keywords" content="笔记,Java,模块化,OSGi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《OSGi入门教程》笔记">
+<meta property="og:url" content="http://mindawei.github.io/2018/01/31/《OSGi入门教程》笔记/index.html">
+<meta property="og:site_name" content="天未的博客">
+<meta property="og:description" content="本文是对《OSGi入门教程》课程的笔记。 OSGi基础概念基本概念OSGi的一些定义 Open Services Gateway initative 开发服务网关协议 是指Java的动态模块化系统的一系列规范。（OSGi联盟，osgi.org） OSGi Alliance 组织 以及该组织指制定的一个基于Java语言的服务规范。(Wiki) Java 平台的模块层。(《OSGi in Action">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/OSGi生态.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/Bundle所包含内容.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/模块化设计.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/解析问题.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/use子句使用.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/生命周期.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/生命周期层状态转移.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/BundleContext接口.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/Bundle接口.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/Bundle更新.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/OSGi服务.png">
+<meta property="og:image" content="http://mindawei.github.io/images/00006/服务监听事件.png">
+<meta property="og:updated_time" content="2018-05-01T03:43:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《OSGi入门教程》笔记">
+<meta name="twitter:description" content="本文是对《OSGi入门教程》课程的笔记。 OSGi基础概念基本概念OSGi的一些定义 Open Services Gateway initative 开发服务网关协议 是指Java的动态模块化系统的一系列规范。（OSGi联盟，osgi.org） OSGi Alliance 组织 以及该组织指制定的一个基于Java语言的服务规范。(Wiki) Java 平台的模块层。(《OSGi in Action">
+<meta name="twitter:image" content="http://mindawei.github.io/images/00006/OSGi生态.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mindawei.github.io/2018/01/31/《OSGi入门教程》笔记/"/>
+
+
+
+
+
+  <title>《OSGi入门教程》笔记 | 天未的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+		
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天未的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">天未欲使从是也，吾辈必济。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mindawei.github.io/2018/01/31/《OSGi入门教程》笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="天未">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天未的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《OSGi入门教程》笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-31T17:52:51+08:00">
+                2018-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/模块化/" itemprop="url" rel="index">
+                    <span itemprop="name">模块化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/31/《OSGi入门教程》笔记/" class="leancloud_visitors" data-flag-title="《OSGi入门教程》笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,373
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是对<a href="https://course.tianmaying.com/osgi-toturial+osgi-concept#0" target="_blank" rel="noopener">《OSGi入门教程》</a>课程的笔记。</p>
+<h1 id="OSGi基础概念"><a href="#OSGi基础概念" class="headerlink" title="OSGi基础概念"></a>OSGi基础概念</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="OSGi的一些定义"><a href="#OSGi的一些定义" class="headerlink" title="OSGi的一些定义"></a>OSGi的一些定义</h3><ul>
+<li>Open Services Gateway initative 开发服务网关协议</li>
+<li>是指Java的动态模块化系统的一系列规范。（OSGi联盟，osgi.org）</li>
+<li>OSGi Alliance 组织 以及该组织指制定的一个基于Java语言的服务规范。(Wiki)</li>
+<li>Java 平台的模块层。(《OSGi in Action》) </li>
+</ul>
+<a id="more"></a>
+<h3 id="OSGi生态"><a href="#OSGi生态" class="headerlink" title="OSGi生态"></a>OSGi生态</h3><p><img src="/images/00006/OSGi生态.png" alt="OSGi生态.png"></p>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>将大型系统分解为多个模块，通过设置模块的边界来改善系统的可维护性和封装性。</p>
+<h2 id="Java模块化的局限性"><a href="#Java模块化的局限性" class="headerlink" title="Java模块化的局限性"></a>Java模块化的局限性</h2><h3 id="可见性控制不够"><a href="#可见性控制不够" class="headerlink" title="可见性控制不够"></a>可见性控制不够</h3><ul>
+<li>通过Package来组织和划分代码，可见范围可以分为Private、Package、Protected、Public这几类。</li>
+<li>存在的问题：如果是Public的话，任何人都可以访问，希望可以进一步控制（一种方案可以是通过一些模式进行模拟实现，另一种可以是OSGi）。</li>
+</ul>
+<h3 id="Jar包灾难"><a href="#Jar包灾难" class="headerlink" title="Jar包灾难"></a>Jar包灾难</h3><ul>
+<li>ClassPath中的Jar包在运行时没有明确地模块边界。</li>
+<li>多个版本的Jar同时存在时，加载具有不缺定性。Jar Hell（Jar包灾难）。</li>
+</ul>
+<h3 id="部署和管理缺少支持"><a href="#部署和管理缺少支持" class="headerlink" title="部署和管理缺少支持"></a>部署和管理缺少支持</h3><ul>
+<li>模块的动态更、系统动态演化。</li>
+<li>插件化开发。</li>
+</ul>
+<h2 id="OSGi三层架构"><a href="#OSGi三层架构" class="headerlink" title="OSGi三层架构"></a>OSGi三层架构</h2><h3 id="模块层：定义了OSGi中的模块Bundle。"><a href="#模块层：定义了OSGi中的模块Bundle。" class="headerlink" title="模块层：定义了OSGi中的模块Bundle。"></a>模块层：定义了OSGi中的模块Bundle。</h3><ul>
+<li>Bundle是一个具有额外元数据的Jar包。</li>
+<li>Bundle定义了包含的包的可见性（对外暴露哪些模块）。</li>
+<li>Bundle定义了所依赖的包。</li>
+</ul>
+<p><img src="/images/00006/Bundle所包含内容.png" alt="Bundle所包含内容.png"></p>
+<h3 id="生命周期层：提供运行时管理和框架访问接口。"><a href="#生命周期层：提供运行时管理和框架访问接口。" class="headerlink" title="生命周期层：提供运行时管理和框架访问接口。"></a>生命周期层：提供运行时管理和框架访问接口。</h3><ul>
+<li>提供对模块生命周期的操作（install,update,start,stop…），使得程序外部可以动态管理和演化系统。</li>
+<li>定义了运行时上下文的接口，bundle本身可以和OSGi框架进行交互，从而实现内部自我管理。</li>
+</ul>
+<h3 id="服务层：关注模块间的交互。"><a href="#服务层：关注模块间的交互。" class="headerlink" title="服务层：关注模块间的交互。"></a>服务层：关注模块间的交互。</h3><ul>
+<li>服务层是JVM中的SOA（面向服务的架构）。</li>
+<li>服务是动态的，促使你使用基于接口编程。</li>
+<li>OSGi服务是Java Interface，服务调用是Java对象方法调用（Lightweight Tech,轻量级技术）。</li>
+</ul>
+<h2 id="OSGi介绍补充"><a href="#OSGi介绍补充" class="headerlink" title="OSGi介绍补充"></a>OSGi介绍补充</h2><h3 id="OSGi严格的模块化特性的最大优势"><a href="#OSGi严格的模块化特性的最大优势" class="headerlink" title="OSGi严格的模块化特性的最大优势"></a>OSGi严格的模块化特性的最大优势</h3><ul>
+<li>基于接口编程，完全隐藏实现（促进你从架构上思考）。</li>
+<li>动态新（对扩展开发，即使是运行时）。</li>
+</ul>
+<h3 id="OSGi传播的阻力"><a href="#OSGi传播的阻力" class="headerlink" title="OSGi传播的阻力"></a>OSGi传播的阻力</h3><ul>
+<li>最初面向的嵌入式领域，容易被误解为只是嵌入式技术。</li>
+<li>有些人觉得OSGi复杂，人为属于重量级。</li>
+<li>Lib支持不够：很多Lib不能再OSGi环境下运行。</li>
+</ul>
+<h3 id="企业中的OSGi"><a href="#企业中的OSGi" class="headerlink" title="企业中的OSGi"></a>企业中的OSGi</h3><ul>
+<li>企业应用特点：持久化数据、数据量大、访问并发等。</li>
+<li>需要模块化：前端/事务/持久化分离、运行多个服务器上、需要协作化开发。</li>
+<li>存在问题：企业开发中其它框架会使用TCCL（SPI模式）、反射，这些技术在OSGi类加载机制下会有问题。</li>
+</ul>
+<h2 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h2><ol>
+<li>OSGi提供了更粗粒度的模块化特征，可以解决Java模块化的局限性。</li>
+<li>OSGi中声明式和基于元数据的方法是非侵入式的。</li>
+<li>生命周期层定义了模块动态且可控的生命周期模型，简化了系统管理。</li>
+<li>服务层鼓励采用基于接口编程的方法，从而将接口与实现进行分类。</li>
+</ol>
+<h1 id="OSGi模块层"><a href="#OSGi模块层" class="headerlink" title="OSGi模块层"></a>OSGi模块层</h1><h2 id="模块化-1"><a href="#模块化-1" class="headerlink" title="模块化"></a>模块化</h2><h3 id="与面向对象的关系"><a href="#与面向对象的关系" class="headerlink" title="与面向对象的关系"></a>与面向对象的关系</h3><ul>
+<li>都是“关注点分离”（分治）思想的体现，但关注的粒度不一样。</li>
+<li>在实现特定功能时，需要设计类以及类之间的关系，此时需要面向对象的原则和模式。</li>
+<li>当把相关的类在逻辑上组织在一起的时候，需要关注系统模块和模块间的关系。<br><img src="/images/00006/模块化设计.png" alt="模块化设计.png"></li>
+</ul>
+<h3 id="模块化的意义"><a href="#模块化的意义" class="headerlink" title="模块化的意义"></a>模块化的意义</h3><ul>
+<li>解决Java模块化的局限：可见性控制不够、Jar包灾难、部署和管理缺少支持。</li>
+<li>通过显示定义能力（Export-Package）和依赖（Import-Package）,可以优化设计，让系统更加“高内聚低耦合”（软件开发的终极目标）。</li>
+<li>促进协同开发，提高开发效率。</li>
+</ul>
+<h2 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h2><h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>Bundle是一个包含代码、资源、元数据，以Jar的形式存在的模块化单元。</li>
+<li>Jar文件的边界也是模块的边界。Jar包是bundle中代码的物理容器。</li>
+<li>Mainifest.mf文件保存了模块的元数据。</li>
+</ul>
+<h3 id="元数据定义"><a href="#元数据定义" class="headerlink" title="元数据定义"></a>元数据定义</h3><ul>
+<li>元数据信息定义在/META-INF/MANIFEST.MF中，OSGi R5规范定义了28个标记。</li>
+<li>元数据有三类标记：可读信息、Bundle标识（Identification）、代码可见性。</li>
+</ul>
+<h2 id="依赖解析"><a href="#依赖解析" class="headerlink" title="依赖解析"></a>依赖解析</h2><h3 id="OSGi类查找顺序"><a href="#OSGi类查找顺序" class="headerlink" title="OSGi类查找顺序"></a>OSGi类查找顺序</h3><ul>
+<li>如果类所在包以“java.”开头，委托给父类加载器。</li>
+<li>如果类所在的包在导入包中，委托给导出该包的Bundle。</li>
+<li>在Bundle自身的类路径上查找。</li>
+</ul>
+<h3 id="多个提供者的选取规则"><a href="#多个提供者的选取规则" class="headerlink" title="多个提供者的选取规则"></a>多个提供者的选取规则</h3><ul>
+<li>已解析的（resolved）的bundle优先级高，未解析的（installed）bundle优先级低。</li>
+<li>相同优先级多个匹配时，版本高者优先，版本相同则先安装的优先。<br><img src="/images/00006/解析问题.png" alt="解析问题.png"></li>
+</ul>
+<h3 id="uses子句使用"><a href="#uses子句使用" class="headerlink" title="uses子句使用"></a>uses子句使用</h3><ol>
+<li>使用uses子句来解决类空间不一致的问题。</li>
+<li>uses约束是可传递的。</li>
+<li>谨慎使用uses,会大大限制解析的灵活性。</li>
+<li>使用场景如下。</li>
+</ol>
+<ul>
+<li>导出包中的类，其方法签名中包含了其Import-Package中的类。</li>
+<li>导出包中的类，继承了其Import-Packeage中的类。</li>
+</ul>
+<p><img src="/images/00006/use子句使用.png" alt="use子句使用"></p>
+<h1 id="OSGi生命周期层"><a href="#OSGi生命周期层" class="headerlink" title="OSGi生命周期层"></a>OSGi生命周期层</h1><h2 id="基本概念-2"><a href="#基本概念-2" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="生命周期管理"><a href="#生命周期管理" class="headerlink" title="生命周期管理"></a>生命周期管理</h3><ul>
+<li>通过外部或内部对应用进行操作，完成对应用的“生命周期管理”过程。</li>
+<li>对于非模块应用，这些操作是以整个应用为对象。</li>
+<li>对于模块化应用，可以有更细粒度（针对某个模块）的生命周期管理。<br><img src="/images/00006/生命周期.png" alt="生命周期.png"></li>
+</ul>
+<h3 id="生命周期层的作用"><a href="#生命周期层的作用" class="headerlink" title="生命周期层的作用"></a>生命周期层的作用</h3><ul>
+<li>在应用外部，该层精确定义了对bundle生命周期的相关操作。</li>
+<li>在应用内部，该层定义了bundle访问其执行上下文的方式，为bundle提供了一种与OSGi框架交互的途径。</li>
+<li>对生命周期的操作允许你动态地改变运行于框架汇中的bundle组成，并以此来管理和演化应用程序。</li>
+</ul>
+<h2 id="生命周期层状态转移"><a href="#生命周期层状态转移" class="headerlink" title="生命周期层状态转移"></a>生命周期层状态转移</h2><p><img src="/images/00006/生命周期层状态转移.png" alt="生命周期层状态转移"></p>
+<h2 id="使用生命周期层"><a href="#使用生命周期层" class="headerlink" title="使用生命周期层"></a>使用生命周期层</h2><ul>
+<li><p>BundleActivator是生命周期层的基础设施,如下所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface BundleActivator&#123;</span><br><span class="line">	public void start(BundleContext context) throws Exception;</span><br><span class="line">	public void stop(BundleContext context) throws Exception;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bundle属于active时，BundleContext才有意义，即start方法被调用和stop方法被调用的两个时间点之间。</p>
+</li>
+<li>BundleContext包含部署和生命周期管理相关接口、与bundle间服务交互相关的接口。</li>
+<li>Bundle定义了一系列API,用于管理已安装的bundle的生命周期。</li>
+</ul>
+<p><img src="/images/00006/BundleContext接口.png" alt="BundleContext接口"></p>
+<p><img src="/images/00006/Bundle接口.png" alt="Bundle接口"></p>
+<h2 id="Bundle的更新"><a href="#Bundle的更新" class="headerlink" title="Bundle的更新"></a>Bundle的更新</h2><h3 id="两阶段更新"><a href="#两阶段更新" class="headerlink" title="两阶段更新"></a>两阶段更新</h3><ul>
+<li>两阶段更新：先update,再显示refresh。</li>
+<li>为什么两阶段？对外输出后，其它模块会使用旧版本，需要刷新，可参考<a href="http://blog.csdn.net/saloon_yuan/article/details/7902569" target="_blank" rel="noopener">《bundle动态更新》</a>。<br><img src="/images/00006/Bundle更新.png" alt="Bundle更新"></li>
+</ul>
+<h3 id="刷新流程"><a href="#刷新流程" class="headerlink" title="刷新流程"></a>刷新流程</h3><ol>
+<li>从bundle开始计算受影响的bundle有向图。</li>
+<li>处于ACTIVE状态的bundle被停止并被切换至RESOLVED状态。</li>
+<li>处于RESOLVED状态的bundle，切换至INSTALLED状态，这些bundle的依赖关系不再被解析。</li>
+<li>处于UNINSTALLED状态的bundle会从图中移除，同时也会被彻底地从框架中移除（GC）。</li>
+<li>其它bundle如果在框架重启前处于ACTIVE状态，重启框架会对这些bundle及其依赖的bundle进行解析。</li>
+<li>所有工作完成后，框架会触发一个FrameworkEvent.PACKAGES_REFRESHED事件。</li>
+</ol>
+<h2 id="小节-1"><a href="#小节-1" class="headerlink" title="小节"></a>小节</h2><ol>
+<li>BundleActivator是bundle的入口，与Java应用中的main函数类似。</li>
+<li>BundleContext为应用提供执行时操作OSGi框架的方法。</li>
+<li>Bundle代表了一个已安装到框架中的bundle,允许对其执行状态进行操作。</li>
+</ol>
+<h1 id="OSGi服务层"><a href="#OSGi服务层" class="headerlink" title="OSGi服务层"></a>OSGi服务层</h1><h2 id="基本概念-3"><a href="#基本概念-3" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="什么是服务"><a href="#什么是服务" class="headerlink" title="什么是服务"></a>什么是服务</h3><ul>
+<li>为别人完成的工作（经典定义）。</li>
+<li>指提供者及其使用者之间的一个契约。服务可以被替代，能够发布和查找。</li>
+<li>使用者不关心具体实现，只关心约定的契约。</li>
+</ul>
+<h3 id="面向服务的设计"><a href="#面向服务的设计" class="headerlink" title="面向服务的设计"></a>面向服务的设计</h3><ul>
+<li>降低服务提供者和使用者之间的耦合，更容易重用组件。</li>
+<li>更强调抽象接口而不是具体实现。</li>
+<li>清晰描述依赖关系（可以通过附加元数据描述）。</li>
+<li>支持服务的多个实现方案以及动态替换。</li>
+</ul>
+<h2 id="OSGi服务"><a href="#OSGi服务" class="headerlink" title="OSGi服务"></a>OSGi服务</h2><h3 id="OSGi服务模型"><a href="#OSGi服务模型" class="headerlink" title="OSGi服务模型"></a>OSGi服务模型</h3><ul>
+<li>拥有一个集中的服务注册中心，遵循发布-查询-绑定模型。</li>
+<li>提供者bundle可以将POJOs（Plain Ordinary Java Object）发布为服务。</li>
+<li>使用者bundle可以找到并绑定服务。<br><img src="/images/00006/OSGi服务.png" alt="OSGi服务"></li>
+</ul>
+<h3 id="OSGi服务注册、更新与注销"><a href="#OSGi服务注册、更新与注销" class="headerlink" title="OSGi服务注册、更新与注销"></a>OSGi服务注册、更新与注销</h3><ul>
+<li>服务注册对象是私有的，不能被别的bundle共享，它们与发布服务的bundle的生命周期是绑定的。</li>
+<li>不推荐使用具体类名进行服务注册。</li>
+<li>当一个bundle停止时，任何没有被移除的服务都会被框架自动移除。</li>
+<li>服务排序：先按service.ranking由大到小排序，然后再按service.id由小到大排序。</li>
+<li>按属性查询：使用LDAP过滤字符串（LDAP，Lightweight Directory Access Protocol，轻量目录访问协议）。</li>
+</ul>
+<h3 id="服务使用"><a href="#服务使用" class="headerlink" title="服务使用"></a>服务使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 注册中心会增加一个使用计数。</span><br><span class="line">A serviceA = (A)bundleContext.getService(reference); </span><br><span class="line">// 完成服务时应该通知注册中心。</span><br><span class="line">bundleContext.ungetService(reference);</span><br></pre></td></tr></table></figure>
+<h3 id="服务监听"><a href="#服务监听" class="headerlink" title="服务监听"></a>服务监听</h3><p>服务可以监听的事件包括：REGISTERED（注册）、MODIFIED（更改）、UNREGISTERING（注销）。<br><img src="/images/00006/服务监听事件.png" alt="服务监听事件"></p>
+<h1 id="OSGi开发环境"><a href="#OSGi开发环境" class="headerlink" title="OSGi开发环境"></a>OSGi开发环境</h1><p>略，<a href="https://course.tianmaying.com/osgi-toturial+osgi-development-environment#0" target="_blank" rel="noopener">点击可查看原文</a>。</p>
+
+      
+    </div>
+    
+    
+    
+
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" <i class="fa fa-tag"></i> 笔记</a>
+          
+            <a href="/tags/Java/" <i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/模块化/" <i class="fa fa-tag"></i> 模块化</a>
+          
+            <a href="/tags/OSGi/" <i class="fa fa-tag"></i> OSGi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/2018年Java开发者应该学习的9个方面/" rel="next" title="2018年Java开发者应该学习的9个方面">
+                <i class="fa fa-chevron-left"></i> 2018年Java开发者应该学习的9个方面
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/OSGi博客笔记/" rel="prev" title="OSGi博客笔记">
+                OSGi博客笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzExNS85Njc0"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="天未" />
+            
+              <p class="site-author-name" itemprop="name">天未</p>
+              <p class="site-description motion-element" itemprop="description">天未欲使从是也，吾辈必济。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mindawei" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:m920376513@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                一些链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com/blog/" title="阮一峰" target="_blank">阮一峰</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://calvin1978.blogcn.com/" title="江南白衣" target="_blank">江南白衣</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.useopen.com/blog.html" title="永源中间件" target="_blank">永源中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.christianposta.com/posts/" title="Christian Posta" target="_blank">Christian Posta</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="阿里中间件博客" target="_blank">阿里中间件博客</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi基础概念"><span class="nav-number">1.</span> <span class="nav-text">OSGi基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi的一些定义"><span class="nav-number">1.1.1.</span> <span class="nav-text">OSGi的一些定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi生态"><span class="nav-number">1.1.2.</span> <span class="nav-text">OSGi生态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化"><span class="nav-number">1.1.3.</span> <span class="nav-text">模块化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java模块化的局限性"><span class="nav-number">1.2.</span> <span class="nav-text">Java模块化的局限性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可见性控制不够"><span class="nav-number">1.2.1.</span> <span class="nav-text">可见性控制不够</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jar包灾难"><span class="nav-number">1.2.2.</span> <span class="nav-text">Jar包灾难</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署和管理缺少支持"><span class="nav-number">1.2.3.</span> <span class="nav-text">部署和管理缺少支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSGi三层架构"><span class="nav-number">1.3.</span> <span class="nav-text">OSGi三层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块层：定义了OSGi中的模块Bundle。"><span class="nav-number">1.3.1.</span> <span class="nav-text">模块层：定义了OSGi中的模块Bundle。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期层：提供运行时管理和框架访问接口。"><span class="nav-number">1.3.2.</span> <span class="nav-text">生命周期层：提供运行时管理和框架访问接口。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务层：关注模块间的交互。"><span class="nav-number">1.3.3.</span> <span class="nav-text">服务层：关注模块间的交互。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSGi介绍补充"><span class="nav-number">1.4.</span> <span class="nav-text">OSGi介绍补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi严格的模块化特性的最大优势"><span class="nav-number">1.4.1.</span> <span class="nav-text">OSGi严格的模块化特性的最大优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi传播的阻力"><span class="nav-number">1.4.2.</span> <span class="nav-text">OSGi传播的阻力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#企业中的OSGi"><span class="nav-number">1.4.3.</span> <span class="nav-text">企业中的OSGi</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小节"><span class="nav-number">1.5.</span> <span class="nav-text">小节</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi模块层"><span class="nav-number">2.</span> <span class="nav-text">OSGi模块层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化-1"><span class="nav-number">2.1.</span> <span class="nav-text">模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与面向对象的关系"><span class="nav-number">2.1.1.</span> <span class="nav-text">与面向对象的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化的意义"><span class="nav-number">2.1.2.</span> <span class="nav-text">模块化的意义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bundle"><span class="nav-number">2.2.</span> <span class="nav-text">Bundle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据定义"><span class="nav-number">2.2.2.</span> <span class="nav-text">元数据定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖解析"><span class="nav-number">2.3.</span> <span class="nav-text">依赖解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi类查找顺序"><span class="nav-number">2.3.1.</span> <span class="nav-text">OSGi类查找顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个提供者的选取规则"><span class="nav-number">2.3.2.</span> <span class="nav-text">多个提供者的选取规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uses子句使用"><span class="nav-number">2.3.3.</span> <span class="nav-text">uses子句使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi生命周期层"><span class="nav-number">3.</span> <span class="nav-text">OSGi生命周期层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念-2"><span class="nav-number">3.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期管理"><span class="nav-number">3.1.1.</span> <span class="nav-text">生命周期管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期层的作用"><span class="nav-number">3.1.2.</span> <span class="nav-text">生命周期层的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期层状态转移"><span class="nav-number">3.2.</span> <span class="nav-text">生命周期层状态转移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用生命周期层"><span class="nav-number">3.3.</span> <span class="nav-text">使用生命周期层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bundle的更新"><span class="nav-number">3.4.</span> <span class="nav-text">Bundle的更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两阶段更新"><span class="nav-number">3.4.1.</span> <span class="nav-text">两阶段更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷新流程"><span class="nav-number">3.4.2.</span> <span class="nav-text">刷新流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小节-1"><span class="nav-number">3.5.</span> <span class="nav-text">小节</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi服务层"><span class="nav-number">4.</span> <span class="nav-text">OSGi服务层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念-3"><span class="nav-number">4.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是服务"><span class="nav-number">4.1.1.</span> <span class="nav-text">什么是服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向服务的设计"><span class="nav-number">4.1.2.</span> <span class="nav-text">面向服务的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSGi服务"><span class="nav-number">4.2.</span> <span class="nav-text">OSGi服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi服务模型"><span class="nav-number">4.2.1.</span> <span class="nav-text">OSGi服务模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSGi服务注册、更新与注销"><span class="nav-number">4.2.2.</span> <span class="nav-text">OSGi服务注册、更新与注销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务使用"><span class="nav-number">4.2.3.</span> <span class="nav-text">服务使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务监听"><span class="nav-number">4.2.4.</span> <span class="nav-text">服务监听</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSGi开发环境"><span class="nav-number">5.</span> <span class="nav-text">OSGi开发环境</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">天未</span>
+
+  
+</div>
+
+<div class="powered-by">
+<span id="busuanzi_container_site_uv">访客数: <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="powered-by">
+<span id="busuanzi_container_site_pv">浏览数: <span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 75.5k 字</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("PjBX2YV1D3nbvkPMKNsiuDL3-gzGzoHsz", "YwhAIPodKeO6mgp79j9QOjf6");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
