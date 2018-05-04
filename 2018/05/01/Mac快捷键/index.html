@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="天未的博客">
 <meta property="og:description" content="本文是对苹果电脑上的一些快捷键的记录。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-01T14:16:37.000Z">
+<meta property="og:updated_time" content="2018-05-04T15:55:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac快捷键">
 <meta name="twitter:description" content="本文是对苹果电脑上的一些快捷键的记录。">
@@ -410,7 +410,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  691
+                  1,157
                 </span>
               
 
@@ -426,7 +426,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -814,6 +814,109 @@
 </tr>
 </tbody>
 </table>
+<h1 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h1><p><a href="https://www.cnblogs.com/my--sunshine/p/7093412.html" target="_blank" rel="noopener">Git常用命令总结</a></p>
+<table>
+<thead>
+<tr>
+<th>按钮</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>git status</td>
+<td>查询repo的状态</td>
+</tr>
+<tr>
+<td>git status -s</td>
+<td>输出标记会有两列,第一列是对staging区域而言,第二列是对working目录而言</td>
+</tr>
+<tr>
+<td>git log</td>
+<td>查看提交历史</td>
+</tr>
+<tr>
+<td>git log –oneline</td>
+<td>查看提交历史，每次提交显示一行</td>
+</tr>
+<tr>
+<td>git log –oneline –graph</td>
+<td>图形化地表示出分支合并历史</td>
+</tr>
+<tr>
+<td>git log branchname</td>
+<td>显示特定分支的log</td>
+</tr>
+<tr>
+<td>git log –author=[author name]</td>
+<td>查看作者的提交历史</td>
+</tr>
+<tr>
+<td>git log –grep=keywords</td>
+<td>根据commit信息过滤log</td>
+</tr>
+<tr>
+<td>git log -p</td>
+<td>把每次提交的diff计算出来,作为一个patch显示</td>
+</tr>
+<tr>
+<td>git log –stat</td>
+<td>把每次提交的diff计算出来,–stat比-p的输出更简单一些</td>
+</tr>
+<tr>
+<td>git add</td>
+<td>添加新的文件或改动到暂存区(staging area)</td>
+</tr>
+<tr>
+<td>git add .</td>
+<td>递归添加当前工作目录中所有文件</td>
+</tr>
+<tr>
+<td>git diff</td>
+<td>比较工作目录中当前文件和暂存区域快照之间的差异,即修改后还没暂存起来的内容</td>
+</tr>
+<tr>
+<td>git diff –cached</td>
+<td>查看已经暂存起来的文件和上次提交时的快照之间的差异</td>
+</tr>
+<tr>
+<td>git diff –staged</td>
+<td>效果同上，Git 1.6.1 及更高版本</td>
+</tr>
+<tr>
+<td>git diff HEAD</td>
+<td>比较工作目录和上次提交之间所有的改动</td>
+</tr>
+<tr>
+<td>git diff –stat</td>
+<td>diff也可以加上–stat参数来简化输出</td>
+</tr>
+<tr>
+<td>git diff [branchA] [branchB]</td>
+<td>可以用来比较两个分支，实际上会返回一个由A到B的patch</td>
+</tr>
+<tr>
+<td>git diff [branchA]…[branchB]</td>
+<td>看两个分支分开以后各自的改动都是什么，实际上是:git diff $(git merge-base [branchA] [branchB]) [branchB]的结果</td>
+</tr>
+<tr>
+<td>git commit -m “commit message”</td>
+<td>提交add的内容</td>
+</tr>
+<tr>
+<td>git commit -a</td>
+<td>会先把所有已经track的文件的改动add进来,然后提交，对于没有track的文件,还是需要git add一下</td>
+</tr>
+<tr>
+<td>git commit –amend</td>
+<td>增补提交. 会使用与当前提交节点相同的父节点进行一次新的提交,旧的提交将会被取消</td>
+</tr>
+<tr>
+<td>git reset</td>
+<td>TODO</td>
+</tr>
+</tbody>
+</table>
 <p>// TODO VIM</p>
 
       
@@ -1061,7 +1164,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mac系统"><span class="nav-number">1.</span> <span class="nav-text">Mac系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#切换"><span class="nav-number">1.1.</span> <span class="nav-text">切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用"><span class="nav-number">1.2.</span> <span class="nav-text">通用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#截屏"><span class="nav-number">1.3.</span> <span class="nav-text">截屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件管理器"><span class="nav-number">1.4.</span> <span class="nav-text">文件管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统"><span class="nav-number">1.5.</span> <span class="nav-text">系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谷歌浏览器"><span class="nav-number">2.</span> <span class="nav-text">谷歌浏览器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终端"><span class="nav-number">3.</span> <span class="nav-text">终端</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mac系统"><span class="nav-number">1.</span> <span class="nav-text">Mac系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#切换"><span class="nav-number">1.1.</span> <span class="nav-text">切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用"><span class="nav-number">1.2.</span> <span class="nav-text">通用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#截屏"><span class="nav-number">1.3.</span> <span class="nav-text">截屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件管理器"><span class="nav-number">1.4.</span> <span class="nav-text">文件管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统"><span class="nav-number">1.5.</span> <span class="nav-text">系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谷歌浏览器"><span class="nav-number">2.</span> <span class="nav-text">谷歌浏览器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终端"><span class="nav-number">3.</span> <span class="nav-text">终端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git常用命令"><span class="nav-number">4.</span> <span class="nav-text">Git常用命令</span></a></li></ol></div>
             
 
           </div>
@@ -1111,7 +1214,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 76.7k 字</span>
+  <span class="post-count">全站共 77.2k 字</span>
 </div>
 
 
