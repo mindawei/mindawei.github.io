@@ -120,4 +120,33 @@ categories: 基础
 |ctl + P| 历史中的上一条命令|
 |ctl + N| 历史中的下一条命令|
 
+# Git常用命令
+[Git常用命令总结](https://www.cnblogs.com/my--sunshine/p/7093412.html)
+
+|按钮|功能|
+|---|---|
+|git status| 查询repo的状态|
+|git status -s| 输出标记会有两列,第一列是对staging区域而言,第二列是对working目录而言|
+|git log| 查看提交历史|
+|git log --oneline| 查看提交历史，每次提交显示一行|
+|git log --oneline --graph| 图形化地表示出分支合并历史|
+|git log branchname | 显示特定分支的log|
+|git log --author=[author name]| 查看作者的提交历史|
+|git log --grep=keywords| 根据commit信息过滤log|
+|git log -p| 把每次提交的diff计算出来,作为一个patch显示|
+|git log --stat|  把每次提交的diff计算出来,--stat比-p的输出更简单一些|
+|git add| 添加新的文件或改动到暂存区(staging area)|
+|git add .| 递归添加当前工作目录中所有文件|
+|git diff| 比较工作目录中当前文件和暂存区域快照之间的差异,即修改后还没暂存起来的内容|
+|git diff --cached| 查看已经暂存起来的文件和上次提交时的快照之间的差异|
+|git diff --staged| 效果同上，Git 1.6.1 及更高版本|
+|git diff HEAD| 比较工作目录和上次提交之间所有的改动|
+|git diff --stat| diff也可以加上--stat参数来简化输出|
+|git diff [branchA] [branchB]| 可以用来比较两个分支，实际上会返回一个由A到B的patch|
+|git diff [branchA]…[branchB]|看两个分支分开以后各自的改动都是什么，实际上是:git diff $(git merge-base [branchA] [branchB]) [branchB]的结果|
+|git commit -m “commit message"| 提交add的内容|
+|git commit -a| 会先把所有已经track的文件的改动add进来,然后提交，对于没有track的文件,还是需要git add一下|
+|git commit --amend|增补提交. 会使用与当前提交节点相同的父节点进行一次新的提交,旧的提交将会被取消|
+|git reset|  TODO |
+
 // TODO VIM
