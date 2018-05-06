@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="天未的博客">
 <meta property="og:description" content="本文是对苹果电脑上的一些快捷键的记录。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-04T15:55:15.000Z">
+<meta property="og:updated_time" content="2018-05-06T13:09:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac快捷键">
 <meta name="twitter:description" content="本文是对苹果电脑上的一些快捷键的记录。">
@@ -410,7 +410,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,157
+                  1,710
                 </span>
               
 
@@ -426,7 +426,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  7
                 </span>
               
             </div>
@@ -912,12 +912,123 @@
 <td>增补提交. 会使用与当前提交节点相同的父节点进行一次新的提交,旧的提交将会被取消</td>
 </tr>
 <tr>
-<td>git reset</td>
-<td>TODO</td>
+<td>git reset HEAD</td>
+<td>把不小心add的文件从staged状态取出来</td>
+</tr>
+<tr>
+<td>git reset HEAD filename</td>
+<td>把不小心add的具体文件从staged状态取出来</td>
+</tr>
+<tr>
+<td>git reset –mixed id</td>
+<td>将git的HEAD变了(提交记录变了),但文件并没有改变(working tree并没有改变)，取消了commit和add的内容</td>
+</tr>
+<tr>
+<td>git reset –soft id</td>
+<td>是git reset –mixed id 后,又做了一次git add.即取消了commit的内容</td>
+</tr>
+<tr>
+<td>git reset –hard id</td>
+<td>是将git的HEAD变了,文件也变了</td>
+</tr>
+<tr>
+<td>git revert HEAD</td>
+<td>撤销最近的一个提交</td>
+</tr>
+<tr>
+<td>git rm file</td>
+<td>从staging区移除文件,同时也移除出工作目录</td>
+</tr>
+<tr>
+<td>git rm –cached</td>
+<td>从staging区移除文件,但留在工作目录中</td>
+</tr>
+<tr>
+<td>git clean -df</td>
+<td>从工作目录中移除没有track的文件，-d表示同时移除目录,-f表示force,因为在配置中, clean.requireForce=true,如果不加-f,clean将会拒绝执行</td>
+</tr>
+<tr>
+<td>git branch (branchname)</td>
+<td>创建一个新的分支，分支是基于你的上一次提交建立的</td>
+</tr>
+<tr>
+<td>git branch -v</td>
+<td>可以看见每一个分支的最后一次提交</td>
+</tr>
+<tr>
+<td>git branch</td>
+<td>列出本地所有分支,当前分支会被星号标示出</td>
+</tr>
+<tr>
+<td>git branch -d</td>
+<td>删除一个分支</td>
+</tr>
+<tr>
+<td>git push (remote-name) :(branch-name)</td>
+<td>删除远程的一个分支</td>
+</tr>
+<tr>
+<td>git checkout -b (branchname)</td>
+<td>创建并切换到新的分支</td>
+</tr>
+<tr>
+<td>git checkout –<filename></filename></td>
+<td>使用HEAD中的最新内容替换掉你的工作目录中的文件.已添加到暂存区的改动以及新文件都不会受到影响</td>
+</tr>
+<tr>
+<td>git merge [alias]/[branch]</td>
+<td>把远程分支merge到当前分支</td>
+</tr>
+<tr>
+<td>git tag</td>
+<td>会在一个提交上建立永久性的书签,通常是发布一个release版本或者ship了什么东西之后加tag</td>
+</tr>
+<tr>
+<td>git tag -a v1.0</td>
+<td>-a参数会允许你添加一些信息,即make an annotated tag</td>
+</tr>
+<tr>
+<td>git remote</td>
+<td>列出remote 别名</td>
+</tr>
+<tr>
+<td>git remote -v</td>
+<td>可以看见每个别名对应的实际url</td>
+</tr>
+<tr>
+<td>git remote add [alias] [url]</td>
+<td>添加一个新的remote repo</td>
+</tr>
+<tr>
+<td>git remote rm [alias]</td>
+<td>删除一个存在的remote alias</td>
+</tr>
+<tr>
+<td>git remote rename [old-alias] [new-alias]</td>
+<td>分支重新命名</td>
+</tr>
+<tr>
+<td>git remote set-url [alias] [url]</td>
+<td>跟新别名对应的地址</td>
+</tr>
+<tr>
+<td>git fetch</td>
+<td>获取新的分支和数据</td>
+</tr>
+<tr>
+<td>git fetch [alias]</td>
+<td>取某一个远程repo</td>
+</tr>
+<tr>
+<td>git pull</td>
+<td>首先执行git fetch,然后执行git merge,把取来的分支的head merge到当前分支</td>
+</tr>
+<tr>
+<td>git push [alias] [branch]</td>
+<td>将会把当前分支merge到alias上的[branch]分支</td>
 </tr>
 </tbody>
 </table>
-<p>// TODO VIM</p>
 
       
     </div>
@@ -1214,7 +1325,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 77.2k 字</span>
+  <span class="post-count">全站共 77.7k 字</span>
 </div>
 
 
