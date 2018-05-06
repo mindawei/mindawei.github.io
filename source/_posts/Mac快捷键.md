@@ -147,6 +147,32 @@ categories: 基础
 |git commit -m “commit message"| 提交add的内容|
 |git commit -a| 会先把所有已经track的文件的改动add进来,然后提交，对于没有track的文件,还是需要git add一下|
 |git commit --amend|增补提交. 会使用与当前提交节点相同的父节点进行一次新的提交,旧的提交将会被取消|
-|git reset|  TODO |
-
-// TODO VIM
+|git reset HEAD| 把不小心add的文件从staged状态取出来|
+|git reset HEAD filename| 把不小心add的具体文件从staged状态取出来|
+|git reset --mixed id| 将git的HEAD变了(提交记录变了),但文件并没有改变(working tree并没有改变)，取消了commit和add的内容|
+|git reset --soft id| 是git reset –mixed id 后,又做了一次git add.即取消了commit的内容|
+|git reset --hard id| 是将git的HEAD变了,文件也变了|
+|git revert HEAD| 撤销最近的一个提交|
+|git rm file| 从staging区移除文件,同时也移除出工作目录|
+|git rm --cached| 从staging区移除文件,但留在工作目录中|
+|git clean -df| 从工作目录中移除没有track的文件，-d表示同时移除目录,-f表示force,因为在配置中, clean.requireForce=true,如果不加-f,clean将会拒绝执行|
+|git branch (branchname)| 创建一个新的分支，分支是基于你的上一次提交建立的|
+|git branch -v| 可以看见每一个分支的最后一次提交|
+|git branch| 列出本地所有分支,当前分支会被星号标示出|
+|git branch -d| 删除一个分支|
+|git push (remote-name) :(branch-name)| 删除远程的一个分支|
+|git checkout -b (branchname)| 创建并切换到新的分支|
+|git checkout --<filename>| 使用HEAD中的最新内容替换掉你的工作目录中的文件.已添加到暂存区的改动以及新文件都不会受到影响|
+|git merge [alias]/[branch]| 把远程分支merge到当前分支|
+|git tag| 会在一个提交上建立永久性的书签,通常是发布一个release版本或者ship了什么东西之后加tag|
+|git tag -a v1.0| -a参数会允许你添加一些信息,即make an annotated tag|
+|git remote| 列出remote 别名|
+|git remote -v| 可以看见每个别名对应的实际url|
+|git remote add [alias] [url]|  添加一个新的remote repo|
+|git remote rm [alias]| 删除一个存在的remote alias|
+|git remote rename [old-alias] [new-alias]| 分支重新命名|
+|git remote set-url [alias] [url]| 跟新别名对应的地址|
+|git fetch| 获取新的分支和数据|
+|git fetch [alias]| 取某一个远程repo|
+|git pull| 首先执行git fetch,然后执行git merge,把取来的分支的head merge到当前分支|
+|git push [alias] [branch]| 将会把当前分支merge到alias上的[branch]分支|
